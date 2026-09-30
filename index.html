@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grammar Detective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+:root{
+  --paper:#FBF6EA; --card:#FFFDF7; --folder:#EFD9A2; --folder-tab:#E4C77E; --folder-open:#F7E8BF;
+  --ink:#1E2A3A; --ink-soft:#5C6470; --line:#D9CBA8; --brass:#B8862B; --brass-soft:#F1E3BF;
+  --stamp:#C0392B; --stamp-soft:#FBE4E0; --ok:#2E7D4F; --ok-soft:#E1F1E6;
+  --shadow:0 10px 30px rgba(60,40,10,.14);
+  --display:"Special Elite","Courier New",Courier,monospace;
+  --body:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#151B24; --card:#1F2733; --folder:#4A3E22; --folder-tab:#5E4E2A; --folder-open:#5A4A25;
+    --ink:#EEE7D5; --ink-soft:#A8B0BC; --line:#3A4352; --brass:#D9A441; --brass-soft:#3E3419;
+    --stamp:#E0584A; --stamp-soft:#4A2622; --ok:#5DBE86; --ok-soft:#1F3B2C;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151B24; --card:#1F2733; --folder:#4A3E22; --folder-tab:#5E4E2A; --folder-open:#5A4A25;
+  --ink:#EEE7D5; --ink-soft:#A8B0BC; --line:#3A4352; --brass:#D9A441; --brass-soft:#3E3419;
+  --stamp:#E0584A; --stamp-soft:#4A2622; --ok:#5DBE86; --ok-soft:#1F3B2C;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.5;
+  background-image:radial-gradient(rgba(120,90,30,.08) 1px, transparent 1px); background-size:22px 22px;
+}
+.wrap{max-width:960px; margin:0 auto; padding-inline:16px; padding-block:20px 48px}
+h1,h2,h3{font-family:var(--display); font-weight:400; margin:0; text-wrap:balance; line-height:1.15}
+button{font-family:inherit; font-size:inherit; cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--brass); outline-offset:3px}
+.eyebrow{font-family:var(--display); font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; color:var(--brass)}
+.hidden{display:none!important}
+
+/* ---------- header ---------- */
+.masthead{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; border-bottom:3px double var(--line); padding-bottom:14px; margin-bottom:22px}
+.masthead h1{font-size:clamp(2rem,6vw,3.2rem); letter-spacing:.02em}
+.masthead h1 span{color:var(--stamp)}
+.rank{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:8px 14px; display:flex; gap:14px; align-items:center; box-shadow:var(--shadow)}
+.rank .badge{width:44px; height:44px; border-radius:50%; background:var(--brass); color:#fff; display:grid; place-items:center; font-family:var(--display); font-size:1.3rem; flex:none; box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+.rank .lbl{font-size:.75rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.08em}
+.rank .val{font-weight:800; font-variant-numeric:tabular-nums}
+.intro{color:var(--ink-soft); max-width:62ch; margin-bottom:18px}
+
+/* ---------- case board ---------- */
+.board{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:18px 16px}
+.folder{position:relative; border:0; text-align:left; padding:0; background:transparent; color:var(--ink); display:flex; flex-direction:column; align-items:stretch}
+.folder .tab{align-self:flex-start}
+.folder .tab{display:inline-block; background:var(--folder-tab); font-family:var(--display); font-size:.78rem; letter-spacing:.1em; padding:4px 12px 2px; border-radius:6px 6px 0 0; margin-left:10px}
+.folder .body{background:var(--folder); border-radius:0 8px 8px 8px; padding:14px 14px 12px; min-height:118px; flex:1; box-shadow:var(--shadow); transition:transform .15s ease, background .15s ease; display:flex; flex-direction:column; gap:6px}
+.folder:hover .body{transform:translateY(-3px); background:var(--folder-open)}
+.folder h3{font-size:1.15rem}
+.folder .topic{font-size:.85rem; color:var(--ink-soft); flex:1}
+.folder .meta{display:flex; justify-content:space-between; align-items:center; font-size:.85rem}
+.stars{color:var(--brass); letter-spacing:.08em; font-size:1.05rem}
+.stars .off{opacity:.3}
+.best{font-variant-numeric:tabular-nums; color:var(--ink-soft)}
+.folder .done{position:absolute; right:10px; top:26px; font-family:var(--display); font-size:.7rem; color:var(--stamp); border:2px solid var(--stamp); padding:1px 6px; border-radius:4px; transform:rotate(-8deg); letter-spacing:.1em; opacity:.85}
+.board-foot{margin-top:24px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; color:var(--ink-soft); font-size:.9rem}
+.linkbtn{background:none; border:0; color:var(--ink-soft); text-decoration:underline; padding:0}
+
+/* ---------- play ---------- */
+.topbar{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+.topbar h2{font-size:1.35rem}
+.topbar h2 small{color:var(--brass); font-size:.8rem; letter-spacing:.12em; display:block}
+.ghost{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:8px 14px; color:var(--ink)}
+.ghost:hover{border-color:var(--brass)}
+.track{display:grid; grid-template-columns:repeat(10,1fr); gap:6px; margin-bottom:18px}
+.track i{height:8px; border-radius:4px; background:var(--line); display:block}
+.track i.cur{background:var(--brass)}
+.track i.ok{background:var(--ok)}
+.track i.bad{background:var(--stamp)}
+.card{background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); padding:22px 22px 20px; position:relative}
+.card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:6px; border-radius:10px 0 0 10px; background:var(--brass)}
+.qhead{display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:8px}
+.score{font-family:var(--display); color:var(--ink-soft); font-size:.9rem; font-variant-numeric:tabular-nums}
+.question{font-size:1.25rem; font-weight:700; margin:0 0 12px}
+.evidence{background:var(--brass-soft); border-left:4px solid var(--brass); padding:10px 14px; border-radius:0 6px 6px 0; font-size:1.15rem; font-style:italic; margin:0 0 16px; line-height:1.55}
+.evidence .blank{font-style:normal; font-weight:800; border-bottom:2px solid var(--ink); padding:0 6px}
+.opts{display:grid; gap:10px; margin:0; padding:0; list-style:none}
+.opt{display:flex; gap:12px; align-items:center; width:100%; text-align:left; background:var(--paper); border:2px solid var(--line); border-radius:8px; padding:11px 14px; color:var(--ink); transition:border-color .12s, transform .12s}
+.opt:hover:not(:disabled){border-color:var(--brass); transform:translateX(3px)}
+.opt:disabled{cursor:default}
+.opt .key{flex:none; width:30px; height:30px; border-radius:50%; border:2px solid var(--line); display:grid; place-items:center; font-family:var(--display); font-size:.95rem}
+.opt.correct{border-color:var(--ok); background:var(--ok-soft)}
+.opt.correct .key{background:var(--ok); border-color:var(--ok); color:#fff}
+.opt.wrong{border-color:var(--stamp); background:var(--stamp-soft)}
+.opt.wrong .key{background:var(--stamp); border-color:var(--stamp); color:#fff}
+.opt.dim{opacity:.55}
+.note{margin-top:16px; border-top:1px dashed var(--line); padding-top:14px; display:grid; gap:8px}
+.note .verdict{font-family:var(--display); font-size:1.15rem}
+.note .verdict.good{color:var(--ok)}
+.note .verdict.bad{color:var(--stamp)}
+.note p{margin:0}
+.note .nb{font-size:.8rem; color:var(--brass); letter-spacing:.12em; text-transform:uppercase; font-family:var(--display)}
+.actions{display:flex; justify-content:flex-end; gap:10px; margin-top:12px; flex-wrap:wrap}
+.primary{background:var(--ink); color:var(--paper); border:0; border-radius:6px; padding:11px 20px; font-weight:800; font-family:var(--display); letter-spacing:.06em; font-size:1rem}
+.primary:hover{filter:brightness(1.15)}
+.hint{font-size:.8rem; color:var(--ink-soft); margin-top:12px}
+
+/* ---------- results ---------- */
+.result{text-align:center; padding-block:36px}
+.stamp{display:inline-block; font-family:var(--display); font-size:clamp(1.8rem,7vw,3rem); color:var(--stamp); border:5px solid var(--stamp); border-radius:10px; padding:6px 22px; letter-spacing:.12em; transform:rotate(-7deg); animation:stampIn .35s cubic-bezier(.2,1.4,.5,1) both; mix-blend-mode:multiply}
+:root[data-theme="dark"] .stamp{mix-blend-mode:normal}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .stamp{mix-blend-mode:normal} }
+@keyframes stampIn{from{transform:rotate(-7deg) scale(2.2); opacity:0} to{transform:rotate(-7deg) scale(1); opacity:1}}
+@media (prefers-reduced-motion: reduce){ .stamp{animation:none} .folder .body,.opt{transition:none} }
+.result .bigscore{font-family:var(--display); font-size:3rem; margin-top:18px; font-variant-numeric:tabular-nums}
+.result .bigscore small{font-size:1.2rem; color:var(--ink-soft)}
+.result .stars{font-size:2.2rem; margin:6px 0 10px}
+.result .msg{max-width:52ch; margin:0 auto 20px; color:var(--ink-soft)}
+.result .actions{justify-content:center}
+.review{text-align:left; margin-top:30px}
+.review h3{font-size:1.1rem; margin-bottom:10px; color:var(--brass)}
+.review ul{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+.review li{background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:10px 14px}
+.review .rq{font-weight:700}
+.review .ra{color:var(--ok); font-weight:700}
+.review .rw{color:var(--ink-soft); font-size:.92rem; margin-top:4px}
+.newrank{background:var(--brass-soft); border:1px solid var(--brass); border-radius:6px; padding:8px 14px; display:inline-block; margin-bottom:12px; font-family:var(--display)}
+@media (max-width:480px){ .card{padding:16px 14px} .question{font-size:1.12rem} .evidence{font-size:1.05rem} }
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+
+  <!-- ===== HOME / CASE BOARD ===== -->
+  <section id="home">
+    <header class="masthead">
+      <div>
+        <div class="eyebrow">Case files for 6th-grade sleuths</div>
+        <h1>Grammar <span>Detective</span></h1>
+      </div>
+      <div class="rank" aria-live="polite">
+        <div class="badge" id="rankBadge">★</div>
+        <div>
+          <div class="lbl">Your rank</div>
+          <div class="val" id="rankName">Rookie</div>
+          <div class="lbl"><span id="rankStars">0</span> / 60 stars collected</div>
+        </div>
+      </div>
+    </header>
+    <p class="intro">Pick a case file. Each case has 10 clues to crack. Score 6 or more to earn a star, 8 to earn two, and a perfect 10 closes the case with three stars. Wrong answers come with a note from the Chief so you learn the rule.</p>
+    <div class="board" id="board"></div>
+    <div class="board-foot">
+      <span>Progress is saved in this browser.</span>
+      <button class="linkbtn" id="resetBtn" type="button">Reset all progress</button>
+    </div>
+  </section>
+
+  <!-- ===== PLAY ===== -->
+  <section id="play" class="hidden">
+    <div class="topbar">
+      <h2><small id="caseNo">Case 01</small><span id="caseTitle">Nouns</span></h2>
+      <button class="ghost" id="backBtn" type="button">← Case board</button>
+    </div>
+    <div class="track" id="track" aria-hidden="true"></div>
+    <div class="card">
+      <div class="qhead">
+        <div class="eyebrow" id="clueNo">Clue 1 of 10</div>
+        <div class="score" id="scoreLine">Evidence: 0 ✓</div>
+      </div>
+      <p class="question" id="qText"></p>
+      <p class="evidence" id="qSentence"></p>
+      <ul class="opts" id="opts"></ul>
+      <div class="note hidden" id="note">
+        <div class="verdict" id="verdict"></div>
+        <div class="nb">Detective's notebook</div>
+        <p id="why"></p>
+        <div class="actions"><button class="primary" id="nextBtn" type="button">Next clue →</button></div>
+      </div>
+      <p class="hint" id="kbHint">Tip: press 1–4 (or A–D) to answer, Enter to continue.</p>
+    </div>
+  </section>
+
+  <!-- ===== RESULT ===== -->
+  <section id="result" class="hidden">
+    <div class="card result">
+      <div class="stamp" id="stampText">CASE CLOSED</div>
+      <div class="bigscore"><span id="finalScore">0</span><small> / 10 clues solved</small></div>
+      <div class="stars" id="finalStars"></div>
+      <div class="newrank hidden" id="newRank"></div>
+      <p class="msg" id="finalMsg"></p>
+      <div class="actions">
+        <button class="ghost" id="againBtn" type="button">Try this case again</button>
+        <button class="ghost" id="boardBtn" type="button">Case board</button>
+        <button class="primary" id="nextCaseBtn" type="button">Next case →</button>
+      </div>
+      <div class="review hidden" id="review">
+        <h3>Clues to review</h3>
+        <ul id="reviewList"></ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ============================================================
+   CASE FILES — 20 units × 10 questions
+   q: question, s: sentence shown as evidence (optional; ___ = blank),
+   o: options, a: index of correct option, w: explanation
+   ============================================================ */
+const UNITS = [
+{t:"Nouns", d:"Common, proper, abstract, and plural nouns", q:[
+ {q:"Which word is a noun?", s:"The detective found a muddy footprint near the gate.", o:["found","muddy","footprint","near"], a:2, w:"A noun names a person, place, thing, or idea. A footprint is a thing you can see and touch."},
+ {q:"Which word is a proper noun?", o:["city","river","Chicago","teacher"], a:2, w:"A proper noun names one specific person, place, or thing and always starts with a capital letter. Chicago is a specific city."},
+ {q:"Which noun is an abstract noun?", o:["bicycle","courage","museum","sandwich"], a:1, w:"Abstract nouns name ideas or feelings you cannot touch, like courage, honesty, or fear."},
+ {q:"What is the correct plural of \"child\"?", o:["childs","childes","children","childrens"], a:2, w:"\"Child\" is an irregular noun. Its plural is \"children,\" with no extra -s."},
+ {q:"Which word is a collective noun?", s:"A ___ of birds flew over the harbor.", o:["flock","feather","wing","sky"], a:0, w:"A collective noun names a group of things as one unit: a flock of birds, a team of players, a herd of cows."},
+ {q:"How many nouns are in this sentence?", s:"My sister left her umbrella on the bus.", o:["1","2","3","4"], a:2, w:"The nouns are sister, umbrella, and bus. \"Her\" is a pronoun, not a noun."},
+ {q:"Which sentence contains a proper noun that is missing its capital letter?", o:["We visited the park on saturday.","She read a book about dogs.","The teacher smiled at the class.","My cousin plays soccer."], a:0, w:"Days of the week are proper nouns. It should be \"Saturday.\""},
+ {q:"What is the correct plural of \"box\"?", o:["boxs","boxes","boxies","boxen"], a:1, w:"Nouns that end in -x, -s, -sh, or -ch add -es to make the plural: box → boxes."},
+ {q:"Which word is a concrete noun?", o:["happiness","freedom","whistle","honesty"], a:2, w:"A concrete noun names something you can see, hear, touch, taste, or smell. You can hold and hear a whistle."},
+ {q:"What kind of noun is \"kindness\" in this sentence?", s:"Kindness is the best clue.", o:["proper noun","concrete noun","abstract noun","collective noun"], a:2, w:"Kindness is an idea or quality you cannot touch, so it is an abstract noun."}
+]},
+{t:"Pronouns", d:"Subject, object, possessive, and reflexive pronouns", q:[
+ {q:"Which pronoun correctly fills the blank?", s:"Maria lost her keys, so ___ searched the whole house.", o:["she","her","hers","herself"], a:0, w:"The pronoun is doing the action (searching), so it needs the subject form \"she.\""},
+ {q:"Choose the correct pronoun.", s:"The coach gave the trophy to Jamal and ___.", o:["I","me","myself","mine"], a:1, w:"After the preposition \"to,\" use the object pronoun \"me.\" Test it: you would say \"gave the trophy to me,\" not \"to I.\""},
+ {q:"What is the antecedent of \"they\"?", s:"The twins said they saw a shadow.", o:["shadow","twins","saw","said"], a:1, w:"The antecedent is the noun a pronoun refers back to. \"They\" stands for the twins."},
+ {q:"Which word is a possessive pronoun?", o:["they","them","theirs","themselves"], a:2, w:"Possessive pronouns show ownership: mine, yours, his, hers, ours, theirs."},
+ {q:"Which sentence uses a reflexive pronoun correctly?", o:["I made myself a sandwich.","Myself made a sandwich.","Give the sandwich to myself.","Me and myself ate a sandwich."], a:0, w:"A reflexive pronoun (myself, himself, themselves) points back to the subject. \"I made myself a sandwich\" works because \"I\" and \"myself\" are the same person."},
+ {q:"Choose the correct word.", s:"___ is going to solve this case?", o:["Who","Whom","Whose","Which"], a:0, w:"\"Who\" is the subject form. Since the word is doing the solving, use \"who.\" (\"Whom\" is used for objects, like \"to whom.\")"},
+ {q:"Which word is an interrogative pronoun (a pronoun that asks a question)?", o:["he","this","which","ours"], a:2, w:"Interrogative pronouns ask questions: who, whom, whose, which, what."},
+ {q:"Choose the correct word.", s:"The dog wagged ___ tail.", o:["it's","its","its'","their"], a:1, w:"\"Its\" (no apostrophe) shows ownership. \"It's\" always means \"it is\" or \"it has.\""},
+ {q:"Which sentence has a pronoun that does NOT agree with its antecedent?", o:["Sam and Leo forgot his tickets.","The kittens chased their mother.","Ava finished her homework.","The bus lost its wheel."], a:0, w:"\"Sam and Leo\" is plural, so the pronoun must be plural too: \"their tickets.\""},
+ {q:"Which word is a demonstrative pronoun?", s:"___ is the fingerprint we need.", o:["This","It","She","Who"], a:0, w:"Demonstrative pronouns point to something: this, that, these, those."}
+]},
+{t:"Verbs", d:"Action, linking, and helping verbs", q:[
+ {q:"Which word is the action verb?", s:"The suspect sprinted across the wet parking lot.", o:["suspect","sprinted","across","wet"], a:1, w:"An action verb tells what the subject does. The suspect sprinted."},
+ {q:"Which word is the linking verb?", s:"The soup smells delicious.", o:["soup","smells","delicious","The"], a:1, w:"A linking verb connects the subject to a word that describes it. \"Smells\" links soup to delicious. Test: soup = delicious."},
+ {q:"Which word is the helping verb?", s:"The witnesses have described the car.", o:["witnesses","have","described","car"], a:1, w:"Helping verbs come before the main verb. \"Have\" helps the main verb \"described.\""},
+ {q:"In which sentence is \"is\" a linking verb?", o:["She is running to school.","The answer is simple.","He is going to win.","They is walking home."], a:1, w:"In \"The answer is simple,\" \"is\" links answer to simple. In the others, \"is\" is a helping verb next to an -ing verb (and \"they is\" is also wrong)."},
+ {q:"Which verb shows a physical action?", o:["seem","become","appear","whisper"], a:3, w:"Seem, become, and appear are linking verbs. Whisper is something you actually do."},
+ {q:"How many verbs are in this sentence?", s:"Nina grabbed her coat and dashed outside.", o:["1","2","3","4"], a:1, w:"The two verbs are grabbed and dashed. Nina did both actions."},
+ {q:"Choose the correct helping verb.", s:"The detectives ___ examining the letter right now.", o:["are","is","be","am"], a:0, w:"\"Detectives\" is plural, so it needs the plural helping verb \"are.\""},
+ {q:"Which word can be BOTH a verb and a noun?", o:["run","quickly","under","happy"], a:0, w:"\"I run every day\" (verb) and \"I went for a run\" (noun). Many English words work as more than one part of speech."},
+ {q:"Which sentence contains a verb phrase (a helping verb + a main verb)?", o:["The cat slept.","The rain will stop soon.","Birds sing.","Leo laughed loudly."], a:1, w:"\"Will stop\" is a verb phrase: \"will\" is the helping verb and \"stop\" is the main verb."},
+ {q:"Which verb is NOT a linking verb?", o:["am","were","became","jumped"], a:3, w:"Am, were, and became are linking verbs. Jumped is an action verb."}
+]},
+{t:"Verb Tenses", d:"Past, present, future, and irregular verbs", q:[
+ {q:"What is the past tense of \"catch\"?", o:["catched","caught","catch","catching"], a:1, w:"\"Catch\" is irregular. Its past tense is \"caught,\" not \"catched.\""},
+ {q:"Choose the correct verb.", s:"Tomorrow, we ___ the museum.", o:["visit","visited","will visit","visiting"], a:2, w:"\"Tomorrow\" tells you the action is in the future, so use \"will visit.\""},
+ {q:"Which sentence is in the present tense?", o:["I walked to the store.","I walk to the store.","I will walk to the store.","I had walked to the store."], a:1, w:"\"Walk\" is the present tense form. Walked is past, will walk is future, had walked is past perfect."},
+ {q:"What is the past tense of \"bring\"?", o:["brang","bringed","brought","brung"], a:2, w:"\"Bring\" is irregular: bring, brought, brought."},
+ {q:"Which sentence has a tense-shift error (it switches tenses by mistake)?", o:["She opens the door and screams.","She opened the door and screamed.","She opened the door and screams.","She will open the door and scream."], a:2, w:"\"Opened\" is past but \"screams\" is present. Keep the tense the same: opened and screamed."},
+ {q:"Choose the correct helping verb.", s:"By noon, the detective ___ already found the clue.", o:["has","had","have","having"], a:1, w:"This is past perfect: \"had\" + past participle shows an action finished before another past time (noon)."},
+ {q:"Choose the verb that shows an action happening right now.", s:"Right now the kids ___ in the yard.", o:["play","played","are playing","will play"], a:2, w:"\"Are playing\" is the present progressive tense. It shows an action in progress at this moment."},
+ {q:"What is the past tense of \"think\"?", o:["thinked","thought","thunk","thinking"], a:1, w:"\"Think\" is irregular: think, thought, thought."},
+ {q:"Choose the correct verb.", s:"Every morning, Grandpa ___ the newspaper.", o:["reads","readed","will read","reading"], a:0, w:"\"Every morning\" describes a habit, so use the simple present: reads."},
+ {q:"Which sentence is in the future tense?", o:["The train left the station.","The train leaves at noon.","The train is leaving now.","The train will leave at noon."], a:3, w:"\"Will leave\" shows something that has not happened yet."}
+]},
+{t:"Subject-Verb Agreement", d:"Matching singular and plural subjects with verbs", q:[
+ {q:"Choose the correct verb.", s:"The dog ___ at the mail carrier.", o:["barks","bark","barking","are barking"], a:0, w:"One dog is a singular subject, so the verb needs an -s: barks."},
+ {q:"Choose the correct verb.", s:"The boxes of evidence ___ heavy.", o:["is","are","was","be"], a:1, w:"The subject is \"boxes\" (plural), not \"evidence.\" Ignore the prepositional phrase \"of evidence.\""},
+ {q:"Choose the correct verb.", s:"Neither the cat nor the dogs ___ hungry.", o:["is","are","was","am"], a:1, w:"With \"neither...nor,\" the verb agrees with the closer subject. \"Dogs\" is plural, so use \"are.\""},
+ {q:"Choose the correct verb.", s:"Everyone ___ a role in the play.", o:["have","has","are having","were having"], a:1, w:"\"Everyone\" is singular (think \"every one\"), so it takes \"has.\""},
+ {q:"Choose the correct verb.", s:"My brother and I ___ to camp every summer.", o:["goes","go","is going","has gone"], a:1, w:"\"My brother and I\" is a compound subject joined by \"and,\" so it is plural: go."},
+ {q:"Choose the correct verb.", s:"The team ___ practicing tonight.", o:["is","are","be","were"], a:0, w:"\"Team\" is a collective noun. When the group acts as one unit, treat it as singular: is."},
+ {q:"Choose the correct verb.", s:"There ___ three suspects in the room.", o:["is","are","was","be"], a:1, w:"\"There\" is not the subject. The real subject is \"suspects\" (plural), so use \"are.\""},
+ {q:"Choose the correct verb.", s:"Each of the puppies ___ a name.", o:["have","has","are having","were"], a:1, w:"\"Each\" is singular, even when followed by \"of the puppies.\" Each one has a name."},
+ {q:"Which sentence is correct?", o:["The news are on.","The news is on.","The news were on.","The news be on."], a:1, w:"\"News\" ends in -s but is a singular noun. Use \"is.\""},
+ {q:"Choose the correct verb.", s:"The bag of marbles ___ on the shelf.", o:["sit","sits","are sitting","were"], a:1, w:"The subject is \"bag\" (singular). \"Of marbles\" is just a prepositional phrase."}
+]},
+{t:"Adjectives", d:"Describing words, comparatives, and superlatives", q:[
+ {q:"Which word is an adjective?", s:"The detective examined the tiny footprint.", o:["detective","examined","tiny","footprint"], a:2, w:"An adjective describes a noun. \"Tiny\" tells what kind of footprint."},
+ {q:"Which sentence uses a comparative adjective (comparing two things)?", o:["This clue is big.","This clue is bigger than that one.","This is the biggest clue of all.","This clue is huge."], a:1, w:"Comparative adjectives compare two things and usually end in -er or use \"more\": bigger."},
+ {q:"What is the superlative form of \"good\"?", o:["gooder","best","most good","goodest"], a:1, w:"\"Good\" is irregular: good, better, best."},
+ {q:"Which word is an article?", o:["the","happy","run","quickly"], a:0, w:"The articles are a, an, and the. They are a special kind of adjective."},
+ {q:"Choose the correct form.", s:"She is ___ than her brother.", o:["more tall","taller","tallest","most tall"], a:1, w:"Short adjectives add -er to compare two things: taller. Do not use \"more\" with -er."},
+ {q:"Which adjective tells HOW MANY?", s:"Several witnesses saw the red car.", o:["several","witnesses","saw","red"], a:0, w:"\"Several\" tells how many witnesses. \"Red\" tells what kind of car."},
+ {q:"Choose the correct form.", s:"That was the ___ movie I have ever seen.", o:["funnier","funniest","most funniest","more funny"], a:1, w:"Comparing one movie against all others uses the superlative: funniest. Never say \"most funniest.\""},
+ {q:"Which word is a proper adjective (made from a proper noun)?", s:"We ate ___ food at the festival.", o:["Italian","tasty","hot","spicy"], a:0, w:"\"Italian\" comes from the proper noun Italy, so it is a proper adjective and keeps its capital letter."},
+ {q:"Which word is NOT an adjective in this sentence?", s:"The old, rusty key opened the heavy door.", o:["old","rusty","heavy","opened"], a:3, w:"Old, rusty, and heavy all describe nouns. \"Opened\" is the verb."},
+ {q:"Choose the correct form.", s:"Of the two puzzles, this one is ___.", o:["harder","hardest","more harder","most hard"], a:0, w:"Only two puzzles are compared, so use the comparative: harder."}
+]},
+{t:"Adverbs", d:"Words that describe verbs, adjectives, and other adverbs", q:[
+ {q:"Which word is an adverb?", s:"The thief crept quietly through the hall.", o:["thief","crept","quietly","hall"], a:2, w:"An adverb often tells how an action happens. \"Quietly\" tells how the thief crept."},
+ {q:"What question does the adverb \"soon\" answer?", s:"She will arrive soon.", o:["how","when","where","why"], a:1, w:"Adverbs answer how, when, where, or to what extent. \"Soon\" tells when she will arrive."},
+ {q:"Choose the correct word.", s:"He played the piano ___.", o:["good","well","goodly","gooder"], a:1, w:"\"Good\" is an adjective; \"well\" is the adverb that describes how he played."},
+ {q:"Which adverb describes an adjective?", s:"The puzzle was extremely hard.", o:["extremely","puzzle","hard","was"], a:0, w:"\"Extremely\" tells how hard the puzzle was. Adverbs can describe adjectives, not just verbs."},
+ {q:"Which word is an adverb that tells WHERE?", s:"The keys are here.", o:["here","keys","are","The"], a:0, w:"\"Here\" tells where the keys are. Here, there, everywhere, and nearby are adverbs of place."},
+ {q:"Choose the correct word.", s:"The turtle moved ___ across the road.", o:["slow","slowly","slower","slowness"], a:1, w:"To describe how the turtle moved, use the adverb \"slowly.\""},
+ {q:"Which sentence uses an adverb correctly?", o:["She sings beautiful.","She sings beautifully.","She is a beautifully singer.","She beautiful sings songs."], a:1, w:"\"Beautifully\" describes how she sings. \"Beautiful\" is an adjective and cannot describe a verb."},
+ {q:"Which word is an adverb that does NOT end in -ly?", s:"The puppy almost caught the ball.", o:["almost","puppy","caught","ball"], a:0, w:"\"Almost\" describes the verb caught (to what extent). Not all adverbs end in -ly: almost, very, never, soon, often."},
+ {q:"Which word does the adverb \"very\" describe?", s:"The clue was very small.", o:["clue","was","small","The"], a:2, w:"\"Very\" tells how small the clue was, so it describes the adjective \"small.\""},
+ {q:"Choose the correct comparative adverb.", s:"Ana runs ___ than Ben.", o:["more quickly","quicklier","quickly","most quickly"], a:0, w:"Adverbs that end in -ly use \"more\" to compare two things: more quickly."}
+]},
+{t:"Prepositions", d:"Prepositions and prepositional phrases", q:[
+ {q:"Which word is a preposition?", s:"The cat hid under the porch.", o:["under","cat","hid","porch"], a:0, w:"A preposition shows the relationship between a noun and another word, often about place or time. \"Under\" tells where the cat hid."},
+ {q:"What is the object of the preposition?", s:"The letter was inside the drawer.", o:["letter","was","inside","drawer"], a:3, w:"The object of a preposition is the noun that follows it. Inside what? The drawer."},
+ {q:"Which group of words is a prepositional phrase?", s:"We walked along the river after lunch.", o:["We walked","along the river","walked along","the river after"], a:1, w:"A prepositional phrase starts with a preposition and ends with its object: along the river. (\"After lunch\" is another one!)"},
+ {q:"Choose the best preposition.", s:"The meeting is ___ Monday.", o:["in","on","at","by"], a:1, w:"Use \"on\" with days: on Monday. Use \"in\" with months and years, and \"at\" with clock times."},
+ {q:"Choose the correct preposition.", s:"She has lived here ___ 2019.", o:["for","since","from","during"], a:1, w:"\"Since\" is used with a starting point in time (since 2019). \"For\" is used with a length of time (for five years)."},
+ {q:"Which word is NOT a preposition?", o:["between","beneath","because","beside"], a:2, w:"\"Because\" is a conjunction. Between, beneath, and beside are prepositions of place."},
+ {q:"How many prepositional phrases are in this sentence?", s:"The box under the bed is full of old photos from Grandma.", o:["1","2","3","4"], a:2, w:"Three: under the bed, of old photos, from Grandma."},
+ {q:"Choose the correct word.", s:"The detective looked ___ the magnifying glass.", o:["through","thorough","threw","though"], a:0, w:"\"Through\" is the preposition meaning from one side to the other. \"Threw\" is the past tense of throw."},
+ {q:"Which sentence has a prepositional phrase that tells WHEN?", o:["The bird sat on the wire.","We left before sunrise.","He walked with his dog.","The ball rolled down the hill."], a:1, w:"\"Before sunrise\" tells when we left. The other phrases tell where or with whom."},
+ {q:"In which sentence does the prepositional phrase describe a noun?", o:["The girl with the red hat waved.","She waved at noon.","He ran into the store.","They sang during dinner."], a:0, w:"\"With the red hat\" tells which girl, so it works like an adjective. The other phrases describe verbs (when or where)."}
+]},
+{t:"Conjunctions", d:"Coordinating, subordinating, and correlative conjunctions", q:[
+ {q:"Which word is a coordinating conjunction?", o:["because","and","although","while"], a:1, w:"The coordinating conjunctions are FANBOYS: for, and, nor, but, or, yet, so."},
+ {q:"Choose the best conjunction.", s:"I wanted to go outside, ___ it was raining.", o:["and","but","or","so"], a:1, w:"\"But\" shows a contrast: wanting to go outside versus the rain stopping you."},
+ {q:"Choose the subordinating conjunction.", s:"___ the bell rang, the students left.", o:["When","And","But","Or"], a:0, w:"\"When\" begins a dependent clause and connects it to the main clause. Subordinating conjunctions include when, because, although, if, since, while."},
+ {q:"Which sentence uses a correlative conjunction pair?", o:["Either you clean your room, or you lose screen time.","I like tea and coffee.","She left because she was tired.","He ran, yet he was late."], a:0, w:"Correlative conjunctions come in pairs: either/or, neither/nor, both/and, not only/but also."},
+ {q:"Choose the best conjunction.", s:"Do you want pizza ___ pasta for dinner?", o:["or","but","so","nor"], a:0, w:"\"Or\" shows a choice between two options."},
+ {q:"Which word is NOT one of the FANBOYS coordinating conjunctions?", o:["for","after","yet","nor"], a:1, w:"\"After\" is a subordinating conjunction (or a preposition). FANBOYS = for, and, nor, but, or, yet, so."},
+ {q:"Choose the best conjunction.", s:"She studied hard, ___ she passed the test.", o:["so","but","nor","or"], a:0, w:"\"So\" shows a result: studying hard led to passing the test."},
+ {q:"Which word begins the dependent clause?", s:"We stayed inside because the storm was loud.", o:["We","stayed","because","storm"], a:2, w:"\"Because the storm was loud\" cannot stand alone as a sentence. \"Because\" makes it a dependent clause."},
+ {q:"Choose the correct word.", s:"Neither the cat ___ the dog wanted a bath.", o:["or","nor","and","but"], a:1, w:"\"Neither\" is always paired with \"nor.\""},
+ {q:"Which sentence correctly joins two complete thoughts?", o:["I ran fast, I missed the bus.","I ran fast and, I missed the bus.","I ran fast, but I missed the bus.","I ran fast but, I missed the bus."], a:2, w:"Join two complete sentences with a comma BEFORE the coordinating conjunction: \"..., but ...\""}
+]},
+{t:"Interjections & Parts of Speech", d:"Interjections plus a review of all eight parts of speech", q:[
+ {q:"Which word is an interjection?", s:"Wow, that footprint is huge!", o:["Wow","footprint","huge","that"], a:0, w:"An interjection is a word that shows sudden feeling: wow, ouch, hey, oops, hooray."},
+ {q:"Which punctuation mark usually follows a STRONG interjection?", o:["comma","exclamation mark","question mark","period"], a:1, w:"A strong interjection gets an exclamation mark (Ouch!). A mild one is followed by a comma (Well, I guess so)."},
+ {q:"What part of speech is \"quickly\"?", s:"She quickly hid the note.", o:["noun","verb","adjective","adverb"], a:3, w:"\"Quickly\" tells how she hid the note, so it is an adverb."},
+ {q:"What part of speech is \"beneath\"?", s:"The map was beneath the rug.", o:["preposition","conjunction","adverb","adjective"], a:0, w:"\"Beneath\" shows where the map was in relation to the rug. It begins the prepositional phrase \"beneath the rug.\""},
+ {q:"What part of speech is \"Oops\"?", s:"Oops, I dropped the evidence.", o:["noun","interjection","verb","pronoun"], a:1, w:"\"Oops\" expresses a sudden feeling and is not connected to the grammar of the rest of the sentence. That makes it an interjection."},
+ {q:"What part of speech is \"they\"?", o:["noun","pronoun","verb","adjective"], a:1, w:"\"They\" takes the place of a noun, so it is a pronoun."},
+ {q:"What part of speech is needed to fill the blank?", s:"The ___ solved the mystery.", o:["noun","adverb","preposition","conjunction"], a:0, w:"The blank needs a person or thing to do the solving: a noun (the detective, the class, the dog)."},
+ {q:"What part of speech is \"brave\"?", s:"The brave scout crossed the creek.", o:["noun","adjective","adverb","verb"], a:1, w:"\"Brave\" describes the scout, so it is an adjective."},
+ {q:"Which sentence punctuates a mild interjection correctly?", o:["Well, I think it was the butler.","Well I think, it was the butler.","Well I think it was, the butler.","Well, I, think it was the butler."], a:0, w:"A mild interjection at the start of a sentence is followed by a comma: \"Well, ...\""},
+ {q:"Which word can be a noun, a verb, OR an adjective depending on the sentence?", o:["light","and","very","she"], a:0, w:"\"Turn on the light\" (noun), \"Light the candle\" (verb), \"a light jacket\" (adjective). Context decides the part of speech."}
+]},
+{t:"Subjects & Predicates", d:"Simple, complete, and compound subjects and predicates", q:[
+ {q:"What is the simple subject?", s:"The old lighthouse keeper waved at the boat.", o:["keeper","lighthouse","old","boat"], a:0, w:"The simple subject is the main noun doing the action: keeper. \"Old\" and \"lighthouse\" just describe the keeper."},
+ {q:"What is the complete predicate?", s:"My cousin collects rare stamps.", o:["My cousin","collects","collects rare stamps","rare stamps"], a:2, w:"The complete predicate is the verb plus everything that goes with it: collects rare stamps."},
+ {q:"What is the simple predicate (the verb)?", s:"The noisy parrot squawked all morning.", o:["parrot","noisy","squawked","morning"], a:2, w:"The simple predicate is the verb by itself: squawked."},
+ {q:"Which sentence has a compound subject?", o:["Mia and Jonah built a fort.","Mia built a fort and painted it.","Mia built a huge fort.","The fort was huge and muddy."], a:0, w:"A compound subject is two or more subjects sharing one verb: Mia and Jonah."},
+ {q:"Which sentence has a compound predicate?", o:["The dog barked and chased the mail truck.","The dog and cat slept.","The dog barked loudly.","The big dog slept."], a:0, w:"A compound predicate is two or more verbs with the same subject: the dog barked AND chased."},
+ {q:"What is the subject of this command?", s:"Close the door quietly.", o:["door","you (understood)","Close","quietly"], a:1, w:"In a command, the subject is \"you,\" even though it is not written: (You) close the door quietly."},
+ {q:"What is the complete subject?", s:"The three kids on the bus laughed.", o:["The three kids on the bus","kids","laughed","on the bus"], a:0, w:"The complete subject is the simple subject plus all the words that describe it."},
+ {q:"What is the simple subject?", s:"Under the bridge lived a grumpy troll.", o:["bridge","troll","lived","Under"], a:1, w:"This sentence is flipped around. Ask \"Who lived?\" The troll lived. \"Bridge\" is the object of a preposition, so it cannot be the subject."},
+ {q:"Which group of words is only a predicate (it is missing a subject)?", o:["Ran across the field.","The horse ran across the field.","The horse in the field.","The tired horse."], a:0, w:"\"Ran across the field\" tells an action but never says who did it. It needs a subject to be a sentence."},
+ {q:"What is the simple subject?", s:"Here comes the parade!", o:["Here","comes","parade","the"], a:2, w:"Ask \"What comes?\" The parade comes. \"Here\" is an adverb, never a subject."}
+]},
+{t:"Sentence Types", d:"Declarative, interrogative, imperative, and exclamatory", q:[
+ {q:"What type of sentence is this?", s:"Where did you hide the map?", o:["declarative","interrogative","imperative","exclamatory"], a:1, w:"An interrogative sentence asks a question and ends with a question mark."},
+ {q:"What type of sentence is this?", s:"Please hand me the flashlight.", o:["declarative","interrogative","imperative","exclamatory"], a:2, w:"An imperative sentence gives a command or makes a request. Its subject is the understood \"you.\""},
+ {q:"What type of sentence is this?", s:"What an amazing discovery this is!", o:["declarative","interrogative","imperative","exclamatory"], a:3, w:"An exclamatory sentence shows strong feeling and ends with an exclamation mark."},
+ {q:"What type of sentence is this?", s:"The library closes at eight.", o:["declarative","interrogative","imperative","exclamatory"], a:0, w:"A declarative sentence makes a statement and ends with a period."},
+ {q:"Which sentence is imperative?", o:["Are you ready?","Turn left at the corner.","I am ready.","That was so close!"], a:1, w:"\"Turn left at the corner\" tells someone what to do. Commands are imperative sentences."},
+ {q:"Which end mark does an interrogative sentence need?", o:["a period","a question mark","an exclamation mark","a comma"], a:1, w:"Questions always end with a question mark."},
+ {q:"Which sentence is exclamatory?", o:["I found the missing cat.","Did you find the cat?","Find the cat.","I found the missing cat!"], a:3, w:"The exclamation mark shows strong excitement, which makes the sentence exclamatory."},
+ {q:"Which sentence is declarative?", o:["Watch out for the puddle.","Is the puddle deep?","The puddle is deep.","How deep the puddle is!"], a:2, w:"\"The puddle is deep\" simply states a fact."},
+ {q:"What type of sentence is this?", s:"Don't touch the evidence.", o:["declarative","interrogative","imperative","exclamatory"], a:2, w:"It is a command, so it is imperative. Commands can be positive (Touch it) or negative (Don't touch it)."},
+ {q:"Which sentence is punctuated correctly for its type?", o:["How old is your dog.","How old is your dog?","How old is your dog,","how old is your dog?"], a:1, w:"A question needs a capital letter at the start and a question mark at the end."}
+]},
+{t:"Sentence Structure", d:"Simple, compound, and complex sentences", q:[
+ {q:"What kind of sentence is this?", s:"The rain stopped, and the sun came out.", o:["simple","compound","complex","fragment"], a:1, w:"Two complete thoughts joined by a comma and \"and\" make a compound sentence."},
+ {q:"What kind of sentence is this?", s:"Because the rain stopped, we went outside.", o:["simple","compound","complex","fragment"], a:2, w:"A complex sentence has one independent clause (we went outside) and one dependent clause (because the rain stopped)."},
+ {q:"What kind of sentence is this?", s:"The puppy chased its tail.", o:["simple","compound","complex","fragment"], a:0, w:"One subject, one verb, one complete thought: a simple sentence."},
+ {q:"Which group of words is an independent clause (can stand alone)?", o:["when the bell rings","the bell rings","although the bell rings","because the bell rang"], a:1, w:"\"The bell rings\" is a complete thought. The others start with words (when, although, because) that leave you waiting for more."},
+ {q:"Which group of words is a dependent clause?", o:["I finished my homework","after I finished my homework","my homework is done","the homework was easy"], a:1, w:"\"After\" makes the clause dependent. After I finished my homework... then what? It needs a main clause."},
+ {q:"Which sentence is compound?", o:["Sam laughed while Ana sang.","Sam laughed, but Ana sang.","Sam and Ana laughed.","Sam laughed and sang."], a:1, w:"Only \"Sam laughed, but Ana sang\" has two independent clauses. The others are simple sentences (even with a compound subject or verb) or complex."},
+ {q:"Which sentence is complex?", o:["I stayed home, so I missed the show.","I missed the show.","I missed the show because I stayed home.","I stayed home and missed the show."], a:2, w:"\"Because I stayed home\" is a dependent clause attached to an independent clause, so the sentence is complex."},
+ {q:"How many independent clauses are in this sentence?", s:"The wind howled, the shutters banged, and the dog hid under the bed.", o:["1","2","3","4"], a:2, w:"Each part could stand alone: the wind howled / the shutters banged / the dog hid under the bed."},
+ {q:"Which word makes the first clause dependent?", s:"Unless we hurry, we will miss the train.", o:["we","hurry","Unless","miss"], a:2, w:"\"Unless\" is a subordinating conjunction. It turns \"we hurry\" into a dependent clause."},
+ {q:"Which complex sentence uses the comma correctly?", o:["When the timer rang, we pulled out the cookies.","When the timer rang we pulled, out the cookies.","When, the timer rang we pulled out the cookies.","When the timer, rang we pulled out the cookies."], a:0, w:"When a dependent clause comes first, put a comma after it, right before the main clause."}
+]},
+{t:"Fragments & Run-ons", d:"Spotting and fixing incomplete and run-together sentences", q:[
+ {q:"Which group of words is a fragment?", o:["Running down the hall.","She ran down the hall.","Run down the hall.","The hall was long."], a:0, w:"\"Running down the hall\" has no subject and no complete verb. Who was running? (\"Run down the hall\" is a command, so it is complete.)"},
+ {q:"Which one is a run-on sentence?", o:["I like soup, and I like bread.","I like soup I like bread.","I like soup and bread.","I like soup; I like bread."], a:1, w:"Two complete thoughts crash together with nothing between them. Add a comma + conjunction, a semicolon, or a period."},
+ {q:"Which is the best way to fix this fragment?", s:"Because the lights went out.", o:["Because the lights went out, we lit candles.","Because the lights, went out.","Because the lights went out!","The lights, because went out."], a:0, w:"A \"because\" clause needs a main clause to finish the thought: ..., we lit candles."},
+ {q:"Which sentence is a comma splice (two sentences joined with only a comma)?", o:["It was late, we went home.","It was late, so we went home.","It was late. We went home.","Because it was late, we went home."], a:0, w:"A comma by itself is not strong enough to join two complete sentences. Add a conjunction like \"so\" or use a period."},
+ {q:"Which is the best fix for this run-on?", s:"The dog barked the cat ran away.", o:["The dog barked, the cat ran away.","The dog barked, and the cat ran away.","The dog barked and, the cat ran away.","The dog barked the cat, ran away."], a:1, w:"Use a comma plus a coordinating conjunction (\"and\") to join the two thoughts."},
+ {q:"Which one is a complete sentence?", o:["After the game ended.","The crowd cheered.","Cheering loudly for the team.","Even though the team lost."], a:1, w:"\"The crowd cheered\" has a subject (crowd), a verb (cheered), and a complete thought."},
+ {q:"Which one is NOT a fragment?", o:["A very tall building with many windows.","Waiting for the bus in the rain.","The bus arrived late.","Under the seat near the window."], a:2, w:"\"The bus arrived late\" is a complete sentence. The others are missing a verb, a subject, or both."},
+ {q:"What is missing from this fragment?", s:"The detective with the gray coat.", o:["a subject","a verb","a noun","an adjective"], a:1, w:"There is a subject (detective) but no verb. What did the detective DO?"},
+ {q:"Which punctuation mark can join two complete sentences WITHOUT a conjunction?", o:["a comma","a semicolon","an apostrophe","a hyphen"], a:1, w:"A semicolon can join two closely related complete sentences: \"It was late; we went home.\""},
+ {q:"Which sentence is correct?", o:["We searched everywhere, we found nothing.","We searched everywhere we found nothing.","We searched everywhere, but we found nothing.","We searched everywhere but, we found nothing."], a:2, w:"Comma, then the conjunction, then the second complete thought."}
+]},
+{t:"Commas", d:"Series, introductions, direct address, and compound sentences", q:[
+ {q:"Which sentence uses commas correctly in a series?", o:["I packed a map a compass and a snack.","I packed a map, a compass, and a snack.","I packed, a map, a compass, and a snack.","I packed a map, a compass and, a snack."], a:1, w:"Put commas between items in a list. Never put a comma right before the first item or right after \"and.\""},
+ {q:"Which sentence uses a comma correctly after an introductory word?", o:["Finally the case, was closed.","Finally, the case was closed.","Finally the case was, closed.","Finally, the, case was closed."], a:1, w:"An introductory word like finally, however, or yes is followed by a comma."},
+ {q:"Which sentence uses a comma correctly for direct address (talking to someone by name)?", o:["Maya please, pass the salt.","Maya, please pass the salt.","Maya please pass, the salt.","Maya please pass the salt,"], a:1, w:"When you speak directly to someone, set their name off with a comma: \"Maya, please...\""},
+ {q:"Which compound sentence uses the comma correctly?", o:["We knocked, but nobody answered.","We knocked but, nobody answered.","We knocked, nobody answered.","We, knocked but nobody answered."], a:0, w:"In a compound sentence, the comma goes right before the conjunction (but)."},
+ {q:"Which date is written correctly?", o:["The case opened on March, 3 2024.","The case opened on March 3, 2024.","The case opened on March 3 2024,.","The case opened on March, 3, 2024."], a:1, w:"In a date, the comma goes between the day and the year: March 3, 2024."},
+ {q:"Where does the comma belong?", s:"Yes I saw the blue car leave the parking lot.", o:["after \"Yes\"","after \"car\"","after \"saw\"","no comma needed"], a:0, w:"\"Yes\" and \"no\" at the start of a sentence are followed by a comma: \"Yes, I saw...\""},
+ {q:"Which sentence uses commas correctly with an appositive (a phrase that renames a noun)?", o:["Mr. Lee our neighbor, found the wallet.","Mr. Lee, our neighbor found the wallet.","Mr. Lee, our neighbor, found the wallet.","Mr. Lee our neighbor found, the wallet."], a:2, w:"\"Our neighbor\" renames Mr. Lee, so it gets a comma on both sides."},
+ {q:"Which sentence uses a comma where NONE is needed?", o:["The dog, barked at the mail carrier.","After the storm, we cleaned the yard.","Yes, I finished my homework.","She bought apples, pears, and grapes."], a:0, w:"Never put a comma between a subject and its verb. \"The dog barked\" needs no comma."},
+ {q:"Which sentence punctuates the city and state correctly?", o:["They live in Denver Colorado.","They live in Denver, Colorado.","They live, in Denver Colorado.","They live in, Denver, Colorado."], a:1, w:"Put a comma between a city and its state: Denver, Colorado."},
+ {q:"Which sentence uses commas correctly with an interrupter?", o:["The clue however was fake.","The clue, however was fake.","The clue however, was fake.","The clue, however, was fake."], a:3, w:"A word that interrupts the sentence, like however, gets commas on both sides."}
+]},
+{t:"Apostrophes", d:"Possessives and contractions", q:[
+ {q:"Choose the correct word.", s:"The ___ collar is red. (one dog)", o:["dog's","dogs","dogs'","dog"], a:0, w:"To show that one dog owns something, add an apostrophe + s: dog's."},
+ {q:"What is the contraction for \"do not\"?", o:["don't","dont","do'nt","do n't"], a:0, w:"The apostrophe takes the place of the missing letter \"o\": do not → don't."},
+ {q:"Choose the correct word.", s:"The three ___ bikes were stolen.", o:["boys","boy's","boys'","boys's"], a:2, w:"For a plural noun that already ends in -s, add only an apostrophe after the s: boys'."},
+ {q:"Choose the correct word.", s:"___ going to rain today.", o:["Its","It's","Its'","Its's"], a:1, w:"\"It's\" means \"it is.\" It is going to rain. \"Its\" (no apostrophe) shows ownership."},
+ {q:"Which one is correct?", o:["the childrens' toys","the children's toys","the childrens toys","the childrens's toys"], a:1, w:"\"Children\" is already plural and does not end in -s, so add apostrophe + s: children's."},
+ {q:"What does \"they've\" mean?", o:["they have","they will","they are","they had"], a:0, w:"they + have = they've. The apostrophe replaces the letters \"ha.\""},
+ {q:"Which sentence uses an apostrophe INCORRECTLY?", o:["The cat's tail is long.","I can't find my shoes.","The apple's are ripe.","Jess's bag is blue."], a:2, w:"\"Apples\" is just a plural, not a possessive or a contraction. Plurals never need an apostrophe."},
+ {q:"Choose the correct word.", s:"___ jacket is this?", o:["Whose","Who's","Whos","Who'se"], a:0, w:"\"Whose\" shows ownership. \"Who's\" means \"who is.\""},
+ {q:"What is the contraction for \"will not\"?", o:["won't","willn't","wo'nt","will'nt"], a:0, w:"\"Will not\" becomes the irregular contraction \"won't.\""},
+ {q:"Choose the correct word.", s:"The ___ nest is in the oak tree. (one bird)", o:["bird's","birds","birds'","birds's"], a:0, w:"One bird owns the nest: bird's."}
+]},
+{t:"Capitalization", d:"Proper nouns, titles, and first words", q:[
+ {q:"Which sentence is capitalized correctly?", o:["my aunt lives in oregon.","My aunt lives in Oregon.","My Aunt lives in oregon.","My aunt Lives in Oregon."], a:1, w:"Capitalize the first word of a sentence and proper nouns like Oregon. \"Aunt\" is not capitalized unless it is used as part of a name."},
+ {q:"Which of these should ALWAYS be capitalized?", o:["days of the week","seasons of the year","school subjects like math","kinds of animals"], a:0, w:"Days and months are proper nouns. Seasons (summer), most subjects (math), and animals (tiger) are not."},
+ {q:"Which book title is capitalized correctly?", o:["charlotte's web","Charlotte's Web","Charlotte's web","charlotte's Web"], a:1, w:"Capitalize the first word and every important word in a title."},
+ {q:"Which sentence is capitalized correctly?", o:["We celebrate thanksgiving in november.","We celebrate Thanksgiving in november.","We celebrate thanksgiving in November.","We celebrate Thanksgiving in November."], a:3, w:"Holidays and months are proper nouns, so both Thanksgiving and November get capital letters."},
+ {q:"Choose the correct word.", s:"Yesterday ___ found a shiny coin.", o:["i","I","me","Me"], a:1, w:"The pronoun \"I\" is always capitalized, no matter where it appears in a sentence."},
+ {q:"Which sentence is capitalized correctly?", o:["On Tuesday we study spanish.","On tuesday we study Spanish.","On Tuesday we study Spanish.","On Tuesday we study Spanish and Math."], a:2, w:"Tuesday (a day) and Spanish (a language) are capitalized. \"Math\" is a regular subject, so it stays lowercase."},
+ {q:"Which sentence is capitalized correctly?", o:["I asked aunt Rosa for help.","I asked Aunt Rosa for help.","I asked my Aunt for help.","I asked My aunt for help."], a:1, w:"Capitalize a family title when it is used as part of a name (Aunt Rosa), but not after \"my\" (my aunt)."},
+ {q:"Which proper noun is written correctly?", o:["pacific ocean","Pacific ocean","Pacific Ocean","pacific Ocean"], a:2, w:"Both words are part of the name of a specific place, so both are capitalized."},
+ {q:"Which sentence capitalizes the quotation correctly?", o:["The guard said, \"the gate is locked.\"","The guard said, \"The gate is locked.\"","The Guard said, \"the gate is locked.\"","the guard said, \"The gate is locked.\""], a:1, w:"The first word of a direct quotation is capitalized, even in the middle of a sentence."},
+ {q:"Which sentence is capitalized correctly?", o:["The Doctor lives on Maple Street.","The doctor lives on maple street.","The doctor lives on Maple Street.","the doctor lives on Maple street."], a:2, w:"\"Doctor\" is a common noun here. Street names are proper nouns, so both words in Maple Street are capitalized."}
+]},
+{t:"Quotation Marks", d:"Punctuating dialogue and direct quotations", q:[
+ {q:"Which sentence is punctuated correctly?", o:["\"I found it!\" shouted Priya.","\"I found it\"! shouted Priya.","\"I found it!\", shouted Priya.","I found it! \"shouted Priya.\""], a:0, w:"The exclamation mark goes inside the quotation marks, and no comma is needed after it."},
+ {q:"Which sentence is punctuated correctly?", o:["The coach said \"Run faster.\"","The coach said, \"Run faster.\"","The coach said, \"run faster.\"","The coach, said \"Run faster\"."], a:1, w:"Put a comma after \"said,\" capitalize the first word of the quote, and keep the period inside the quotation marks."},
+ {q:"Where does the period go at the end of this sentence?", s:"She whispered, \"The key is under the mat\"", o:["inside the closing quotation mark","outside the closing quotation mark","no period is needed","before the opening quotation mark"], a:0, w:"In American English, periods and commas always go inside the closing quotation mark."},
+ {q:"Which sentence NEEDS quotation marks?", o:["Ben said he was tired.","Ben said, I am tired.","Ben was tired.","Ben told us about being tired."], a:1, w:"\"I am tired\" is Ben's exact words, so it is a direct quotation and needs quotation marks."},
+ {q:"Which sentence is an indirect quotation (no quotation marks needed)?", o:["Mom said, \"Dinner is ready.\"","Mom said that dinner was ready.","Mom shouted, \"Come eat!\"","\"Dinner!\" Mom called."], a:1, w:"An indirect quotation reports what someone said without using their exact words. The word \"that\" is a big hint."},
+ {q:"Which sentence is punctuated correctly?", o:["\"Are you coming\"? asked Leo.","\"Are you coming?\" asked Leo.","\"Are you coming?\" Asked Leo.","\"Are you coming,\" asked Leo?"], a:1, w:"The question mark belongs inside the quotation marks, and \"asked\" stays lowercase."},
+ {q:"In a story, what should you do when a NEW person starts speaking?", o:["start a new paragraph","add an exclamation mark","write the words in italics","write the words in all capitals"], a:0, w:"Each new speaker gets a new paragraph. This helps readers keep track of who is talking."},
+ {q:"How should the title of a short poem or song be written inside a sentence?", o:["in quotation marks","in all capital letters","in parentheses","with no special marks"], a:0, w:"Short works like poems, songs, and short stories go in quotation marks. Long works like books and movies are italicized or underlined."},
+ {q:"Which sentence is punctuated correctly?", o:["\"Let's go,\" said Ana, \"before it rains.\"","\"Let's go\" said Ana \"before it rains.\"","\"Let's go,\" said Ana, \"Before it rains.\"","\"Let's go, said Ana, before it rains.\""], a:0, w:"When a quote is split by \"said Ana,\" use commas on both sides and do not capitalize the second part unless it starts a new sentence."},
+ {q:"Which sentence is punctuated correctly?", o:["Dad asked, \"Did you feed the fish\"?","Dad asked, \"Did you feed the fish?\"","Dad asked \"did you feed the fish?\"","Dad asked, \"Did you feed the fish?\"."], a:1, w:"Comma after asked, capital D for the first word of the quote, question mark inside the quotation marks, and nothing after."}
+]},
+{t:"Confusing Words", d:"Their/there/they're, its/it's, to/too, and friends", q:[
+ {q:"Choose the correct words.", s:"___ going to the park with ___ dog.", o:["They're / their","Their / they're","There / their","They're / there"], a:0, w:"\"They're\" = they are. \"Their\" shows ownership (their dog). \"There\" is a place."},
+ {q:"Choose the correct words.", s:"The dog wagged ___ tail because ___ happy.", o:["its / it's","it's / its","its / its","it's / it's"], a:0, w:"\"Its\" shows ownership (its tail). \"It's\" = it is (it's happy)."},
+ {q:"Choose the correct words.", s:"I have ___ many cookies ___ eat.", o:["too / to","to / too","two / to","too / too"], a:0, w:"\"Too\" means also or more than enough (too many). \"To\" comes before a verb (to eat)."},
+ {q:"Choose the correct words.", s:"___ going to love ___ new bike.", o:["You're / your","Your / you're","Your / your","You're / you're"], a:0, w:"\"You're\" = you are. \"Your\" shows ownership (your bike)."},
+ {q:"Choose the correct word.", s:"Put the book over ___.", o:["there","their","they're","thier"], a:0, w:"\"There\" points to a place. Hint: \"there\" has the word \"here\" inside it."},
+ {q:"Choose the correct word.", s:"The ___ was cold, so we wore coats.", o:["weather","whether","wether","wheather"], a:0, w:"\"Weather\" is rain, sun, and snow. \"Whether\" means \"if\" (I wonder whether it will rain)."},
+ {q:"Choose the correct word.", s:"Everyone came to the party ___ Tom.", o:["except","accept","expect","exept"], a:0, w:"\"Except\" means \"not including.\" \"Accept\" means to receive or agree to something."},
+ {q:"Choose the correct word.", s:"She is taller ___ her brother.", o:["than","then","thin","thane"], a:0, w:"\"Than\" is used for comparing. \"Then\" tells when something happened (first this, then that)."},
+ {q:"Choose the correct word.", s:"Don't ___ your keys again!", o:["lose","loose","loss","looze"], a:0, w:"\"Lose\" (one o) means to misplace. \"Loose\" (two o's) means not tight."},
+ {q:"Choose the correct word.", s:"The rain did not ___ our plans.", o:["affect","effect","afect","effekt"], a:0, w:"\"Affect\" is usually a verb (to change something). \"Effect\" is usually a noun (the result)."}
+]},
+{t:"The Final Case", d:"A mixed review of every grammar skill", q:[
+ {q:"Which sentence has NO errors?", o:["Me and him went to the store.","He and I went to the store.","Him and me went to the store.","He and me went to the store."], a:1, w:"Both pronouns are subjects, so use the subject forms: He and I. Test each alone: \"He went,\" \"I went.\""},
+ {q:"Choose the correct verb.", s:"The detectives ___ the mystery yesterday.", o:["solve","solves","solved","solving"], a:2, w:"\"Yesterday\" means past tense: solved."},
+ {q:"Which word is an adverb?", s:"The old clock ticked loudly.", o:["old","clock","loudly","ticked"], a:2, w:"\"Loudly\" tells how the clock ticked. \"Old\" is an adjective, \"clock\" is a noun, and \"ticked\" is the verb."},
+ {q:"Which sentence is punctuated correctly?", o:["\"Wait for me,\" called Sam.","\"Wait for me\" called Sam.","\"Wait for me,\" Called Sam.","\"Wait for me\", called Sam."], a:0, w:"The comma goes inside the quotation marks, and \"called\" stays lowercase."},
+ {q:"Which sentence is complex?", o:["I laughed, and she smiled.","Although I laughed, she frowned.","I laughed and smiled.","I laughed."], a:1, w:"\"Although I laughed\" is a dependent clause joined to an independent clause, so the sentence is complex."},
+ {q:"Which sentence has correct subject-verb agreement?", o:["The list of names are long.","The list of names is long.","The lists of names is long.","The list of names were long."], a:1, w:"The subject is \"list\" (singular). Skip the prepositional phrase \"of names\" and match: list is."},
+ {q:"Which sentence uses the apostrophe correctly?", o:["The two dog's bowls are empty.","The two dogs' bowls are empty.","The two dogs bowl's are empty.","The two dogs's bowls are empty."], a:1, w:"Two dogs is plural and ends in -s, so add only an apostrophe: dogs'."},
+ {q:"Which group of words is a fragment?", o:["Because the clock stopped.","The clock stopped.","Stop the clock.","The clock stopped at noon."], a:0, w:"\"Because the clock stopped\" leaves you hanging. It needs a main clause to complete the thought."},
+ {q:"Choose the correct word.", s:"___ going to be a great day.", o:["Its","It's","Their","There"], a:1, w:"\"It's\" = it is. It is going to be a great day."},
+ {q:"Which sentence is capitalized and punctuated correctly?", o:["did you see the movie titanic?","Did you see the movie Titanic?","Did you see the movie titanic.","Did You See The Movie Titanic?"], a:1, w:"Capitalize the first word and the movie title, and end a question with a question mark."}
+]}
+];
+
+/* ============================================================
+   GAME STATE
+   ============================================================ */
+const STORE_KEY = "grammarDetective.v1";
+const RANKS = [[0,"Rookie"],[10,"Junior Detective"],[25,"Detective"],[45,"Senior Inspector"],[60,"Chief Inspector"]];
+
+function loadProgress(){ try{ const raw = localStorage.getItem(STORE_KEY); return raw ? JSON.parse(raw) : {}; }catch(e){ return {}; } }
+function saveProgress(p){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(p)); }catch(e){} }
+let progress = loadProgress();   // { [unitIndex]: {best: n, stars: n, plays: n} }
+
+const state = { unit:0, idx:0, score:0, answered:false, order:[], results:[], missed:[] };
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n+1).padStart(2,"0");
+const starsFor = s => s>=10?3 : s>=8?2 : s>=6?1 : 0;
+const starStr = n => "★".repeat(n) + "<span class=\"off\">" + "★".repeat(3-n) + "</span>";
+function totalStars(){ return Object.values(progress).reduce((t,u)=>t+(u.stars||0),0); }
+function rankFor(stars){ let r = RANKS[0][1]; for(const [min,name] of RANKS){ if(stars>=min) r = name; } return r; }
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function show(id){ ["home","play","result"].forEach(s => $(s).classList.toggle("hidden", s!==id)); window.scrollTo({top:0}); }
+
+/* ---------- home ---------- */
+function renderHome(){
+  const board = $("board"); board.innerHTML = "";
+  UNITS.forEach((u,i)=>{
+    const p = progress[i] || {};
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "folder"; b.setAttribute("aria-label", `Case ${pad(i)}: ${u.t}`);
+    b.innerHTML = `<span class="tab">CASE ${pad(i)}</span>
+      <div class="body">
+        <h3>${u.t}</h3>
+        <div class="topic">${u.d}</div>
+        <div class="meta"><span class="stars" aria-label="${p.stars||0} of 3 stars">${starStr(p.stars||0)}</span><span class="best">${p.best!=null ? "best " + p.best + "/10" : "not started"}</span></div>
+      </div>
+      ${p.stars===3 ? '<span class="done">SOLVED</span>' : ''}`;
+    b.addEventListener("click", ()=>startUnit(i));
+    board.appendChild(b);
+  });
+  const ts = totalStars();
+  $("rankStars").textContent = ts;
+  $("rankName").textContent = rankFor(ts);
+  $("rankBadge").textContent = ts>=60 ? "♛" : ts>=45 ? "◆" : ts>=25 ? "●" : ts>=10 ? "▲" : "★";
+}
+
+/* ---------- play ---------- */
+function startUnit(i){
+  state.unit = i; state.idx = 0; state.score = 0; state.answered = false; state.results = []; state.missed = [];
+  $("caseNo").textContent = "Case " + pad(i);
+  $("caseTitle").textContent = UNITS[i].t;
+  show("play");
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const u = UNITS[state.unit], q = u.q[state.idx];
+  state.answered = false;
+  state.order = shuffle([0,1,2,3]);
+  $("clueNo").textContent = `Clue ${state.idx+1} of 10`;
+  $("scoreLine").textContent = `Evidence: ${state.score} ✓`;
+  $("qText").textContent = q.q;
+  const sEl = $("qSentence");
+  if(q.s){ sEl.classList.remove("hidden"); sEl.innerHTML = escapeHtml(q.s).replace(/___/g, '<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;</span>'); }
+  else sEl.classList.add("hidden");
+  const ol = $("opts"); ol.innerHTML = "";
+  state.order.forEach((optIdx,pos)=>{
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "opt"; b.dataset.opt = optIdx;
+    b.innerHTML = `<span class="key">${"ABCD"[pos]}</span><span class="txt"></span>`;
+    b.querySelector(".txt").textContent = q.o[optIdx];
+    b.addEventListener("click", ()=>answer(optIdx));
+    li.appendChild(b); ol.appendChild(li);
+  });
+  $("note").classList.add("hidden");
+  $("kbHint").classList.remove("hidden");
+  renderTrack();
+}
+
+function renderTrack(){
+  const t = $("track"); t.innerHTML = "";
+  for(let i=0;i<10;i++){
+    const d = document.createElement("i");
+    if(i<state.results.length) d.className = state.results[i] ? "ok" : "bad";
+    else if(i===state.idx) d.className = "cur";
+    t.appendChild(d);
+  }
+}
+
+function answer(optIdx){
+  if(state.answered) return;
+  state.answered = true;
+  const q = UNITS[state.unit].q[state.idx];
+  const correct = optIdx === q.a;
+  if(correct) state.score++;
+  else state.missed.push({q:q.q, s:q.s, ans:q.o[q.a], w:q.w});
+  state.results.push(correct);
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.disabled = true;
+    const i = Number(b.dataset.opt);
+    if(i===q.a) b.classList.add("correct");
+    else if(i===optIdx) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  const v = $("verdict");
+  v.textContent = correct ? pick(["Case cracked! Solid evidence.","Sharp eyes, detective!","Nailed it. The Chief is impressed.","Correct! Another clue in the bag."]) : "Not quite. The correct answer is: " + q.o[q.a];
+  v.className = "verdict " + (correct ? "good" : "bad");
+  $("why").textContent = q.w;
+  $("nextBtn").textContent = state.idx === 9 ? "Close the case →" : "Next clue →";
+  $("note").classList.remove("hidden");
+  $("kbHint").classList.add("hidden");
+  $("scoreLine").textContent = `Evidence: ${state.score} ✓`;
+  renderTrack();
+  $("nextBtn").focus({preventScroll:true});
+}
+
+function next(){
+  if(!state.answered) return;
+  if(state.idx < 9){ state.idx++; renderQuestion(); }
+  else finish();
+}
+
+/* ---------- result ---------- */
+function finish(){
+  const i = state.unit, s = state.score, stars = starsFor(s);
+  const prevTotal = totalStars(), prevRank = rankFor(prevTotal);
+  const p = progress[i] || {best:0, stars:0, plays:0};
+  p.plays = (p.plays||0)+1;
+  if(s > (p.best||0)) p.best = s;
+  if(stars > (p.stars||0)) p.stars = stars;
+  progress[i] = p; saveProgress(progress);
+  const newTotal = totalStars(), newRank = rankFor(newTotal);
+
+  $("stampText").textContent = s===10 ? "CASE CLOSED" : s>=6 ? "CASE SOLVED" : "CASE REOPENED";
+  $("stampText").style.color = s>=6 ? "" : "var(--ink-soft)";
+  $("stampText").style.borderColor = s>=6 ? "" : "var(--ink-soft)";
+  $("finalScore").textContent = s;
+  $("finalStars").innerHTML = starStr(stars);
+  $("finalMsg").textContent = s===10 ? "A perfect investigation. Every clue accounted for. Three stars earned!"
+    : s>=8 ? "Excellent detective work. Review the missed clues below and come back for a perfect score."
+    : s>=6 ? "Good work, detective. You earned a star. Check the notebook entries below and try again for more."
+    : "The trail went cold this time. Read the Chief's notes below, then reopen the case. You need 6 to earn a star.";
+  const nr = $("newRank");
+  if(newRank !== prevRank){ nr.textContent = "★ Promoted to " + newRank + "!"; nr.classList.remove("hidden"); } else nr.classList.add("hidden");
+  const rv = $("review"), rl = $("reviewList"); rl.innerHTML = "";
+  if(state.missed.length){
+    rv.classList.remove("hidden");
+    state.missed.forEach(m=>{
+      const li = document.createElement("li");
+      li.innerHTML = `<div class="rq"></div><div class="rs" style="font-style:italic"></div><div class="ra"></div><div class="rw"></div>`;
+      li.querySelector(".rq").textContent = m.q;
+      const rs = li.querySelector(".rs"); if(m.s) rs.textContent = m.s; else rs.remove();
+      li.querySelector(".ra").textContent = "Answer: " + m.ans;
+      li.querySelector(".rw").textContent = m.w;
+      rl.appendChild(li);
+    });
+  } else rv.classList.add("hidden");
+  $("nextCaseBtn").classList.toggle("hidden", i===UNITS.length-1);
+  show("result");
+}
+
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+/* ---------- wiring ---------- */
+$("backBtn").addEventListener("click", ()=>{ renderHome(); show("home"); });
+$("nextBtn").addEventListener("click", next);
+$("againBtn").addEventListener("click", ()=>startUnit(state.unit));
+$("boardBtn").addEventListener("click", ()=>{ renderHome(); show("home"); });
+$("nextCaseBtn").addEventListener("click", ()=>startUnit(Math.min(state.unit+1, UNITS.length-1)));
+$("resetBtn").addEventListener("click", ()=>{
+  if(confirm("Erase all stars and best scores? This cannot be undone.")){ progress = {}; saveProgress(progress); renderHome(); }
+});
+document.addEventListener("keydown", e=>{
+  if($("play").classList.contains("hidden")) return;
+  const k = e.key.toUpperCase();
+  const map = {"1":0,"2":1,"3":2,"4":3,"A":0,"B":1,"C":2,"D":3};
+  if(!state.answered && k in map){ const b = document.querySelectorAll(".opt")[map[k]]; if(b) b.click(); }
+  else if(state.answered && (e.key==="Enter" || e.key===" ") && document.activeElement !== $("nextBtn")){ e.preventDefault(); next(); }
+});
+
+function boot(data){
+  renderHome();
+  if(data && data.unit!=null && data.results && data.results.length<10){
+    Object.assign(state, {unit:data.unit, idx:data.idx, score:data.score, results:data.results, missed:data.missed||[]});
+    $("caseNo").textContent = "Case " + pad(state.unit); $("caseTitle").textContent = UNITS[state.unit].t;
+    show("play"); renderQuestion();
+  } else show("home");
+}
+try{ window.claude?.hot?.snapshot?.(()=> $("play").classList.contains("hidden") ? {} : {unit:state.unit, idx:state.idx, score:state.score, results:state.results, missed:state.missed}); }catch(e){}
+(window.claude?.hot?.ready) ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data ?? {});
+</script>
+</body>
+</html>
