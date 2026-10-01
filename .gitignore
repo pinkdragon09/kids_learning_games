@@ -1,2 +1,5 @@
 .claude/
 .DS_Store
+*.log
+__story_check.html
+__story_scope.js

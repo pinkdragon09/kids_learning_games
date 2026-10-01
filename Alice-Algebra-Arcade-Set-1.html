@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e62e83"><meta name="description" content="Alice's pink algebra arcade: guided equation puzzles, formula challenges, and word-problem missions.">
+<title>Alice’s Algebra Arcade</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e62e83'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia' font-size='48' fill='white'%3Ex%3C/text%3E%3C/svg%3E">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+:root{--pink:#d62375;--bright:#ee378d;--berry:#54152e;--ink:#4b2336;--muted:#7d586b;--pale:#fff0f7;--line:#f3d3e1;--white:#fff;--success:#105c4c;--success-bg:#edf9f3;--font:'DM Sans',system-ui,sans-serif;--display:'Outfit',system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#fff6fa;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55}button,input,select{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #9334a6;outline-offset:4px}button{transition:transform .15s,background .15s,box-shadow .15s}button:hover:not(:disabled){transform:translateY(-1px)}a{color:inherit;text-decoration:none}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--display);line-height:1.2}.sparkle-field{position:fixed;right:4vw;top:38vh;font-size:180px;font-family:var(--display);color:#fbe1ed;letter-spacing:28px;transform:rotate(-15deg);z-index:-1;pointer-events:none}.masthead{max-width:1320px;padding:27px 46px 23px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:13px;font-family:var(--display);font-weight:700;font-size:25px;line-height:1.1}.brand-icon{width:52px;height:52px;background:var(--pink);color:white;display:grid;place-items:center;border-radius:16px;font-family:Georgia,serif;font-style:italic;font-size:38px;position:relative;box-shadow:0 5px 0 #f6c1d9}.brand-icon span{font-style:normal;position:absolute;right:5px;top:4px;font-size:14px}.brand-sub{display:block;font-family:var(--font);font-size:12px;letter-spacing:2.2px;font-weight:700;margin-top:6px;color:var(--pink)}.header-right{display:flex;align-items:center;gap:28px}.header-note{font-size:14px;color:var(--muted)}.collection-pill{border:1px solid #efbfd4;background:#fff;color:var(--berry);border-radius:100px;padding:11px 17px;display:flex;align-items:center;gap:7px;font-size:14px}.collection-pill>span:first-child{color:var(--pink);font-size:24px}.collection-pill strong{font-size:20px}.layout{max-width:1320px;margin:0 auto;padding:34px 46px 45px;display:grid;grid-template-columns:285px minmax(0,1fr);gap:46px}.map-panel{min-width:0}.eyebrow{font-size:12px;font-weight:700;letter-spacing:1.8px;color:var(--pink)}.map-top h1{font-size:25px;margin:9px 0}.title-star{color:var(--pink);font-size:29px;margin-left:8px;display:inline-block;transform:rotate(12deg)}.map-top p{color:var(--muted);font-size:14px}.map-progress{margin:23px 0 26px}.progress-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}.progress-label strong{color:var(--pink);font-weight:600}.progress-track{height:7px;border-radius:20px;background:#f5dcea;overflow:hidden}.progress-track>div{height:100%;background:var(--pink);border-radius:20px;transition:width .4s}.world-group{margin:0 0 23px}.world-heading{display:flex;align-items:center;gap:9px;font-size:14px;margin-bottom:9px;font-weight:700}.world-icon{border-radius:10px;width:30px;height:30px;background:#f9dbea;display:grid;place-items:center;color:var(--pink);font-size:17px}.world-heading .count{margin-left:auto;font-size:12px;color:var(--muted);font-weight:500}.mission{width:100%;padding:9px 12px;border:1px solid transparent;border-radius:10px;background:transparent;text-align:left;display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px;min-height:42px;margin:2px 0}.mission:hover{background:#fce6f0}.mission.active{background:var(--pink);color:#fff;box-shadow:0 4px 10px #d6237520}.mission .mini-number{width:23px;height:23px;border:1px solid #e7bfd2;border-radius:50%;display:grid;place-items:center;font-size:11px;flex-shrink:0}.mission.active .mini-number{border-color:#ffffff70;background:#ffffff20}.mission .done-icon{margin-left:auto;color:var(--pink);font-size:18px}.mission.active .done-icon{color:#fff}.map-footer{border-top:1px solid var(--line);padding-top:14px;display:flex;align-items:flex-start;flex-direction:column;gap:5px}.text-button{border:0;background:none;color:var(--pink);padding:6px 0;font-size:14px;font-weight:600}.text-button span{font-size:22px;vertical-align:middle;margin-right:5px}.text-button.quiet{color:var(--muted);font-size:13px;font-weight:400}.welcome-row{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:2px 0 24px}.welcome-row h2{font-size:38px;color:var(--berry);margin-top:8px;font-weight:700;letter-spacing:-1.1px}.quest-number{font-family:var(--display);font-size:40px;line-height:1;color:#e3aac4;font-weight:500}.quest-number span{display:block;font-family:var(--font);font-size:12px;color:var(--muted);text-align:right;letter-spacing:1px;margin-top:5px}.quest-card{border:1px solid #efd5e1;border-radius:22px;background:white;box-shadow:0 9px 0 #f9e5ef,0 18px 45px #80164109;overflow:hidden}.card-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:24px 30px 0}.skill-tag{display:inline-flex;font-size:12px;font-weight:600;color:#8d2452;background:#fce9f2;padding:5px 10px;border-radius:6px}.restart-button{border:0;background:transparent;color:var(--muted);font-size:13px;padding:4px}.restart-button span{font-size:18px;margin-right:3px}.restart-button:hover{color:var(--pink)}.problem{padding:22px 30px 25px}.problem .intro{font-size:15px;color:var(--muted);margin-bottom:14px}.equation-display{font-family:var(--display);font-size:clamp(22px,2.7vw,33px);font-weight:500;color:var(--berry);line-height:1.5;letter-spacing:.3px;overflow-wrap:anywhere}.story-display{font-size:17px;line-height:1.8;color:var(--ink);letter-spacing:0}.notation-note{margin-top:15px;border-left:3px solid #f0b4d0;padding:7px 12px;background:#fff7fb;font-size:13px;color:#705263}.step-section{border-top:1px solid var(--line);background:linear-gradient(180deg,#fffafd,#fff 140px);padding:25px 30px 30px;min-height:335px}.step-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:21px}.step-caption{color:var(--muted);font-size:13px}.step-caption strong{color:var(--pink);font-weight:700}.step-dots{display:flex;gap:8px}.step-dot{width:28px;height:28px;border-radius:50%;border:1px solid #efd1df;background:#fff;color:#93657a;font-size:12px;display:grid;place-items:center;padding:0}.step-dot.current{color:white;background:var(--pink);border-color:var(--pink)}.step-dot.solved:not(.current){color:var(--pink);background:#fce4ef}.step-prompt{font-size:19px;font-family:var(--display);font-weight:600;color:var(--berry);line-height:1.5;margin-bottom:17px}.step-equation{font-family:var(--display);background:#fef1f7;border-radius:10px;padding:12px 16px;margin:-3px 0 17px;font-size:21px;overflow-wrap:anywhere}.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0;padding:0;border:0}.choice{background:#fff;border:1.5px solid #ecd7e1;border-radius:12px;padding:13px 15px;display:flex;align-items:flex-start;gap:11px;text-align:left;color:var(--ink);font-size:16px;min-height:57px}.choice-letter{font-size:11px;border:1px solid #ebcddd;border-radius:6px;min-width:22px;height:22px;display:grid;place-items:center;color:#896073;font-weight:600;margin-top:1px}.choice:hover:not(:disabled){border-color:#db6a9d;background:#fff9fc}.choice.selected{border-color:var(--pink);background:#fff0f7;box-shadow:0 0 0 1px var(--pink)}.choice.selected .choice-letter{background:var(--pink);color:white;border-color:var(--pink)}.choice.correct-choice{border-color:#4e9783;background:var(--success-bg)}.choice.wrong-choice{border-color:#cb6287;background:#fff1f5}.answer-form{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.input-wrap{display:flex;align-items:center;gap:12px;width:100%}.answer-input{border:1.5px solid #d99ab7;border-radius:12px;padding:14px 16px;font-size:22px;color:var(--berry);width:min(270px,100%);min-width:0;background:#fffafd}.answer-input::placeholder{font-size:16px;color:#947286}.answer-unit{font-size:16px;color:var(--muted)}.input-help{display:block;font-size:12px;color:var(--muted);margin-top:9px}.action-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}.primary,.secondary{border-radius:11px;padding:12px 23px;font-size:14px;font-weight:700;min-height:47px}.primary{background:var(--pink);border:1px solid var(--pink);color:#fff;box-shadow:0 3px 0 #a71655}.primary:hover:not(:disabled){background:#bc1b65}.primary:disabled{opacity:.45;box-shadow:none}.secondary{border:1px solid #e2b9cc;background:#fff;color:var(--pink)}.help-actions{display:flex;gap:16px;align-items:center}.help-actions button{font-size:13px}.feedback{margin-top:18px;padding:14px 17px;border-radius:12px;font-size:14px;line-height:1.65;background:#fff2f6;border:1px solid #edc7d6;color:#843353}.feedback strong{display:block;font-family:var(--display);font-size:17px;margin-bottom:4px}.feedback.success{color:var(--success);background:var(--success-bg);border-color:#c5e7d9}.hint-box{margin:16px 0 0;padding:12px 15px;border-radius:10px;background:#fff6df;border:1px solid #f4e0ad;color:#755720;font-size:14px}.hint-box strong{display:block;margin-bottom:3px}.practice-footer{display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:12px;padding:23px 3px}.practice-footer>span>span{color:var(--pink);font-size:17px;vertical-align:middle;margin-right:4px}.summary{text-align:center;padding:12px 0}.big-gem{font-size:65px;color:var(--pink);line-height:1.2;display:inline-block;animation:gem-pop .55s}.summary h3{font-size:28px;margin:12px 0;color:var(--berry)}.summary p{color:var(--muted);font-size:15px}.solution-box{background:#fdf0f7;border:1px solid #f3d7e4;border-radius:12px;padding:17px;margin:22px 0;text-align:left}.solution-box .eyebrow{display:block;font-size:11px;margin-bottom:8px}.solution-box .solution-text{color:var(--berry);font-family:var(--display);font-size:20px;white-space:pre-line;line-height:1.6;overflow-wrap:anywhere}.takeaway{font-size:14px!important;line-height:1.7;margin-top:9px!important}.summary-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:20px}.completion-overview{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;margin:18px 0 22px}.collection-gem{font-size:28px;color:#e9cad8;line-height:1.2}.collection-gem.earned{color:var(--pink)}dialog{border:1px solid #edc4d7;border-radius:23px;max-width:480px;width:calc(100% - 36px);padding:30px;color:var(--ink);box-shadow:0 20px 100px #70133135}dialog::backdrop{background:#4b143657;backdrop-filter:blur(4px)}dialog h2{font-size:27px;color:var(--berry);margin:8px 0 14px}dialog p{font-size:15px;line-height:1.7;color:var(--muted)}.dialog-symbol{font-size:35px;color:var(--pink)}.dialog-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:23px}#collection-dialog{text-align:center}#collection-dialog button{margin-top:15px}#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);background:var(--berry);color:white;border-radius:12px;padding:12px 20px;font-size:14px;opacity:0;pointer-events:none;transition:.2s;z-index:5;max-width:90vw;text-align:center}#toast.visible{opacity:1;transform:translate(-50%,0)}#confetti{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:9}.confetti-bit{position:absolute;top:-20px;width:9px;height:14px;border-radius:2px;animation:fall 1.8s ease-in forwards}@keyframes fall{to{transform:translateY(105vh) rotate(640deg);opacity:0}}@keyframes gem-pop{0%{transform:scale(.5) rotate(-15deg)}70%{transform:scale(1.15) rotate(8deg)}100%{transform:scale(1)}}.concept-check{margin-top:18px;text-align:left;font-size:14px}.concept-check summary{color:var(--pink);font-weight:600;cursor:pointer}.concept-check p{font-size:14px!important;white-space:pre-line;padding:12px 0}.storage-note{font-size:12px!important;margin-top:12px!important}.geometric-diagram{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;background:#fff7fb;border-radius:12px;padding:18px;margin-top:16px}.geometric-diagram svg{width:230px;height:125px;max-width:100%;overflow:visible}.geometric-diagram text{font-family:var(--font);font-size:13px;fill:var(--berry)}
+@media(min-width:1400px){.layout{padding-top:45px}.welcome-row{margin-bottom:28px}.quest-card{min-height:590px}}
+@media(max-width:1050px){.masthead{padding:22px 26px}.layout{padding:28px 26px;grid-template-columns:250px minmax(0,1fr);gap:27px}.header-note{display:none}.welcome-row h2{font-size:32px}.card-top{padding:21px 23px 0}.problem{padding:20px 23px 23px}.step-section{padding:23px}.choices{grid-template-columns:1fr}.quest-number{font-size:35px}}
+@media(max-width:740px){.masthead{padding:19px 18px}.brand{font-size:21px;gap:10px}.brand-icon{width:43px;height:43px;font-size:32px}.brand-sub{font-size:10px;letter-spacing:1.5px}.collection-pill{padding:7px 11px;gap:5px}.collection-pill>span:last-child{font-size:0}.collection-pill>span:last-child:after{content:'gems';font-size:12px}.collection-pill strong{font-size:17px}.layout{display:flex;flex-direction:column;padding:23px 18px;gap:22px}.map-panel{order:2}.map-top h1{font-size:22px}.map-top p{font-size:14px}.map-progress{margin:15px 0 20px}.map-top{padding-top:12px}.play-area{order:1}.welcome-row{margin:0 0 19px}.welcome-row h2{font-size:30px}.eyebrow{font-size:11px;letter-spacing:1.2px}.quest-number{font-size:30px}.card-top{padding:18px 19px 0;gap:6px;flex-wrap:wrap}.skill-tag{font-size:11px}.restart-button{font-size:12px}.problem{padding:19px}.equation-display{font-size:26px}.story-display{font-size:16px}.step-section{padding:20px 19px;min-height:300px}.choices{grid-template-columns:1fr}.step-prompt{font-size:18px}.practice-footer{padding:20px 0 5px;font-size:11px}.practice-footer>span:last-child{display:none}.mission{min-height:44px}.world-group{margin-bottom:19px}.step-row{flex-wrap:wrap}.help-actions{gap:13px}.primary,.secondary{padding:11px 17px}.action-row{gap:15px}.sparkle-field{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+
+</head>
+<body>
+<div class="sparkle-field" aria-hidden="true">＋ &nbsp; × &nbsp; ÷ &nbsp; ＝</div>
+<header class="masthead">
+<a class="brand" href="#" id="brand-home" aria-label="Alice's Algebra Arcade, return to mission"><span class="brand-icon" aria-hidden="true">x<span>★</span></span><span>Alice’s<span class="brand-sub">ALGEBRA ARCADE</span></span></a>
+<div class="header-right"><span class="header-note">A little practice. A lot of sparkle.</span><button class="collection-pill" id="collection-button" aria-label="View gem collection"><span aria-hidden="true">✦</span> <strong id="gem-count">0</strong><span>/ 14 gems</span></button></div>
+</header>
+<main class="layout">
+<aside class="map-panel" aria-label="Mission map">
+<div class="map-top"><span class="eyebrow">YOUR ADVENTURE</span><h1>Pick a mission<span class="title-star" aria-hidden="true">✳</span></h1><p>Go in any order. Every try counts.</p></div>
+<div class="map-progress"><div class="progress-label"><span>Gem collection</span><strong id="map-count">0 / 14</strong></div><div class="progress-track"><div id="overall-progress"></div></div></div>
+<nav id="mission-map" aria-label="Choose an algebra exercise"></nav>
+<div class="map-footer"><button class="text-button" id="surprise-button"><span aria-hidden="true">⤨</span> Surprise me</button><button class="text-button quiet" id="reset-button">Start a new adventure</button></div>
+</aside>
+<section class="play-area" aria-label="Practice exercise">
+<div class="welcome-row"><div><span class="eyebrow" id="world-label">WORLD 01 · EQUATION GARDEN</span><h2 id="quest-title">Signs & sparkles</h2></div><span class="quest-number" id="quest-number">01<span>/ 14</span></span></div>
+<article class="quest-card" id="quest-card"><div class="card-top"><span class="skill-tag" id="skill-tag">Distributive property</span><button id="restart-button" class="restart-button"><span aria-hidden="true">↻</span> Restart exercise</button></div><div id="problem-area"></div><div id="step-area"></div></article>
+<div class="practice-footer"><span><span aria-hidden="true">♡</span> No timer. No lost points. Just learning.</span><span>Made for Alice</span></div>
+</section>
+</main>
+<dialog id="reset-dialog"><form method="dialog"><span class="dialog-symbol" aria-hidden="true">✦</span><h2>A fresh adventure?</h2><p>This resets your gems and all exercise progress on this browser. You can replay one exercise with its Restart button.</p><div class="dialog-actions"><button class="secondary" value="cancel">Keep my progress</button><button class="primary" value="reset">Start fresh</button></div></form></dialog>
+<dialog id="collection-dialog"><form method="dialog"><span class="dialog-symbol" aria-hidden="true">✦</span><h2>Your gem collection</h2><div id="collection-content"></div><button class="primary" value="close">Back to the arcade</button></form></dialog>
+<div id="toast" role="status" aria-live="polite"></div><div id="confetti" aria-hidden="true"></div>
+<noscript>Please enable JavaScript to play Alice’s Algebra Arcade.</noscript>
+<script>
+/* Algebra practice data. Plain Unicode math keeps every card readable without a math library. */
+window.ALGEBRA_NOTES = [
+  'Fractions work in answer boxes: enter −2/9 as -2/9, or enter a decimal.',
+  'The typed expression 8/3a is ambiguous. This quest uses 8/(3a). If it means (8/3) × a instead, the answers are a = (9 ± 2√15)/2.',
+  'The volume formula is interpreted as V = (1/3)πr²h, and t = 1/8s + 1 is interpreted as t = s/8 + 1.',
+  'The walk-a-thon question needs a shared-laps assumption: Sara and Marwa walk the same number of laps.'
+];
+
+window.ALGEBRA_QUESTS = [
+  {
+    id: 'distribute-fraction', world: 'equations', title: 'Ribbon Reveal',
+    skill: 'Distribute a negative fraction and solve',
+    display: '−(4/5)(5x − 10) = 8 + 3x',
+    intro: 'Unwrap the parentheses, then collect the x terms.',
+    steps: [
+      {
+        prompt: 'Distribute −4/5. What does the left side become?', type: 'choice',
+        choices: [
+          { text: '−4x − 8', correct: false, feedback: 'A negative times a negative is positive: (−4/5)(−10) = +8.' },
+          { text: '−4x + 8', correct: true, feedback: 'Yes! Multiply both terms inside the parentheses by −4/5.' },
+          { text: '−4x + 10', correct: false, feedback: 'The −10 also needs to be multiplied by −4/5. It becomes +8.' }
+        ],
+        hint: 'Multiply −4/5 by 5x, and then by −10.',
+        explanation: '−(4/5)(5x − 10) = −4x + 8.'
+      },
+      {
+        prompt: 'Subtract 8 from both sides. Which equation remains?', equation: '−4x + 8 = 8 + 3x', type: 'choice',
+        choices: [
+          { text: '−4x = 3x', correct: true, feedback: 'The +8 cancels on both sides.' },
+          { text: '−4x = 16 + 3x', correct: false, feedback: 'Subtracting 8 from +8 gives 0, not 16.' },
+          { text: '−4x = 8 + 3x', correct: false, feedback: 'A balance move must happen on both sides. Subtract 8 on the right too.' }
+        ],
+        hint: 'The same +8 appears on both sides.',
+        explanation: 'Subtracting 8 gives −4x = 3x. Subtracting 3x then gives −7x = 0.'
+      },
+      {
+        prompt: 'Solve for x.', equation: '−7x = 0', type: 'number', answer: 0,
+        hint: 'Divide both sides by −7. Zero divided by a nonzero number is zero.',
+        explanation: 'x = 0. Checking the original equation gives 8 = 8.',
+        success: 'Ribbon revealed! x = 0.'
+      }
+    ],
+    solution: '−4x + 8 = 8 + 3x → −7x = 0 → x = 0.',
+    takeaway: 'Distribute to every term. A variable can equal zero.'
+  },
+  {
+    id: 'fraction-combo', world: 'equations', title: 'Smoothie Mix',
+    skill: 'Clear fractions and combine like terms',
+    display: 'x/2 + (2/5)(x − 2) = −1',
+    intro: 'Mix the fractional ingredients into one easy equation.',
+    steps: [
+      {
+        prompt: 'Which number is the least common denominator of 2 and 5?', type: 'choice',
+        choices: [
+          { text: '7', correct: false, feedback: 'Adding the denominators does not find a common denominator. Look for a multiple of both 2 and 5.' },
+          { text: '5', correct: false, feedback: '5 is not a multiple of 2.' },
+          { text: '10', correct: true, feedback: '10 is the smallest positive multiple of both 2 and 5.' }
+        ],
+        hint: 'List multiples of 2 until you find one that is also a multiple of 5.',
+        explanation: 'Multiplying every term on both sides by 10 clears the fractions.'
+      },
+      {
+        prompt: 'Multiply the entire equation by 10. What do you get?', type: 'choice',
+        choices: [
+          { text: '5x + 4(x − 2) = −10', correct: true, feedback: 'Exactly: 10 × x/2 = 5x and 10 × 2/5 = 4.' },
+          { text: '5x + 4(x − 2) = −1', correct: false, feedback: 'Multiply the right side by 10 too: 10 × (−1) = −10.' },
+          { text: '5x + 2(x − 2) = −10', correct: false, feedback: '10 × 2/5 is 4, so the second coefficient becomes 4.' }
+        ],
+        hint: 'The 10 must multiply both left-side terms and the −1.',
+        explanation: '5x + 4(x − 2) = −10.'
+      },
+      {
+        prompt: 'Distribute, combine, and add 8. Which equation is correct?', equation: '5x + 4(x − 2) = −10', type: 'choice',
+        choices: [
+          { text: '9x = −18', correct: false, feedback: 'After 9x − 8 = −10, add 8 to both sides: −10 + 8 = −2.' },
+          { text: '9x = −2', correct: true, feedback: 'Yes: 5x + 4x − 8 = −10, so 9x = −2.' },
+          { text: '9x = 2', correct: false, feedback: 'Keep the sign: −10 + 8 is −2, not +2.' }
+        ],
+        hint: 'First simplify to 9x − 8 = −10.',
+        explanation: '5x + 4x − 8 = −10 → 9x − 8 = −10 → 9x = −2.'
+      },
+      {
+        prompt: 'Solve for x. A fraction is welcome!', equation: '9x = −2', type: 'number', answer: -2/9,
+        hint: 'Divide both sides by 9.',
+        explanation: 'x = −2/9. Check: −1/9 + (2/5)(−20/9) = −1/9 − 8/9 = −1.',
+        success: 'Perfect blend! x = −2/9.'
+      }
+    ],
+    solution: 'Multiply by 10: 5x + 4(x − 2) = −10 → 9x = −2 → x = −2/9.',
+    takeaway: 'When clearing fractions, multiply every term on both sides.'
+  },
+  {
+    id: 'no-solution-d', world: 'equations', title: 'Mystery Door',
+    skill: 'Recognize a contradiction and no solution',
+    display: '3(d + 4) = 2 + 3d − 8',
+    intro: 'Some equations have no key. Find out whether this door can open.',
+    steps: [
+      {
+        prompt: 'Simplify both sides.', type: 'choice',
+        choices: [
+          { text: '3d + 4 = 3d − 6', correct: false, feedback: 'The 3 multiplies the +4 too, giving +12.' },
+          { text: '3d + 12 = 3d + 6', correct: false, feedback: 'On the right, 2 − 8 = −6.' },
+          { text: '3d + 12 = 3d − 6', correct: true, feedback: 'The left distributes to 3d + 12, and 2 − 8 is −6.' }
+        ],
+        hint: 'Distribute on the left; combine 2 and −8 on the right.',
+        explanation: '3(d + 4) = 3d + 12, and 2 + 3d − 8 = 3d − 6.'
+      },
+      {
+        prompt: 'Subtract 3d from both sides. What remains?', equation: '3d + 12 = 3d − 6', type: 'choice',
+        choices: [
+          { text: '12 = −6', correct: true, feedback: 'Both variable terms cancel, leaving a false statement.' },
+          { text: 'd = −18', correct: false, feedback: 'The d terms cancel completely. There is no d term left to solve for.' },
+          { text: '12 = 6', correct: false, feedback: 'Subtracting 3d does not change the −6 constant.' }
+        ],
+        hint: '3d − 3d = 0 on each side.',
+        explanation: 'After subtracting 3d, the equation claims 12 = −6.'
+      },
+      {
+        prompt: 'What does 12 = −6 tell you about the original equation?', type: 'choice',
+        choices: [
+          { text: 'd = 0', correct: false, feedback: 'Try d = 0: the original sides are 12 and −6. They still do not match.' },
+          { text: 'No solution', correct: true, feedback: 'Correct! No value of d can make 12 equal −6.' },
+          { text: 'Infinitely many solutions', correct: false, feedback: 'Infinitely many solutions would leave a true statement, such as 12 = 12.' }
+        ],
+        hint: 'A false statement after the variable cancels means no value works.',
+        explanation: 'The variable disappears and the remaining statement is false, so there is no solution.',
+        success: 'Mystery solved! This equation has no solution.'
+      }
+    ],
+    solution: '3d + 12 = 3d − 6 → 12 = −6 → no solution.',
+    takeaway: 'When variables cancel, a false statement means no solution; a true statement means every value works.'
+  },
+  {
+    id: 'minus-parentheses', world: 'equations', title: 'Sign Switch',
+    skill: 'Subtract parentheses and recognize no solution',
+    display: '3x − (9 − 4x) = 7x − 8',
+    intro: 'The minus sign outside the parentheses flips both signs inside.',
+    steps: [
+      {
+        prompt: 'Remove the parentheses on the left.', type: 'choice',
+        choices: [
+          { text: '3x − 9 − 4x', correct: false, feedback: 'Subtracting −4x gives +4x. The outside minus flips both inside signs.' },
+          { text: '3x − 9 + 4x', correct: true, feedback: 'Exactly: −(9 − 4x) = −9 + 4x.' },
+          { text: '3x + 9 − 4x', correct: false, feedback: 'The outside minus changes +9 to −9 and −4x to +4x.' }
+        ],
+        hint: 'Think of the minus as multiplying the parentheses by −1.',
+        explanation: '3x − (9 − 4x) = 3x − 9 + 4x = 7x − 9.'
+      },
+      {
+        prompt: 'Subtract 7x from both sides. What remains?', equation: '7x − 9 = 7x − 8', type: 'choice',
+        choices: [
+          { text: 'x = 1', correct: false, feedback: 'The x terms cancel completely, so a numerical x answer cannot follow.' },
+          { text: '−9 = 8', correct: false, feedback: 'Subtracting 7x does not change the sign of the −8.' },
+          { text: '−9 = −8', correct: true, feedback: 'Both 7x terms cancel, leaving a contradiction.' }
+        ],
+        hint: 'Each side has the same variable term, 7x.',
+        explanation: '7x − 9 = 7x − 8 → −9 = −8.'
+      },
+      {
+        prompt: 'Choose the solution set.', type: 'choice',
+        choices: [
+          { text: 'No solution', correct: true, feedback: 'Yes! −9 and −8 cannot be equal.' },
+          { text: 'x = −1', correct: false, feedback: 'For any x, the left side stays exactly 1 less than the right side.' },
+          { text: 'All real numbers', correct: false, feedback: 'All real numbers would require a true statement after the x terms cancel.' }
+        ],
+        hint: 'Is the statement left after cancellation true or false?',
+        explanation: 'No value of x makes the two sides equal. Their constants differ by 1.',
+        success: 'Sign switch mastered! No solution.'
+      }
+    ],
+    solution: '3x − 9 + 4x = 7x − 8 → −9 = −8 → no solution.',
+    takeaway: 'A minus outside parentheses changes every sign inside.'
+  },
+  {
+    id: 'fraction-bar', world: 'equations', title: 'Cupcake Tower',
+    skill: 'Undo operations around a fraction',
+    display: '(4y − 7)/3 − 1 = 15',
+    intro: 'Climb back through the operations to uncover y.',
+    steps: [
+      {
+        prompt: 'What happens when you add 1 to both sides?', type: 'choice',
+        choices: [
+          { text: '(4y − 7)/3 = 14', correct: false, feedback: 'Adding 1 to 15 gives 16.' },
+          { text: '4y − 7 = 16', correct: false, feedback: 'Adding 1 removes the −1; the division by 3 is still there.' },
+          { text: '(4y − 7)/3 = 16', correct: true, feedback: 'Yes! Undo the −1 first.' }
+        ],
+        hint: 'The fraction is one whole quantity. Undo what happens outside it first.',
+        explanation: 'Add 1: (4y − 7)/3 = 16.'
+      },
+      {
+        prompt: 'Multiply both sides by 3.', equation: '(4y − 7)/3 = 16', type: 'choice',
+        choices: [
+          { text: '4y − 7 = 48', correct: true, feedback: 'The division by 3 cancels, and 16 × 3 = 48.' },
+          { text: '4y − 21 = 48', correct: false, feedback: 'The entire numerator was divided by 3. Multiplying by 3 restores 4y − 7.' },
+          { text: '4y − 7 = 16/3', correct: false, feedback: 'To undo division by 3, multiply the right side by 3 too.' }
+        ],
+        hint: 'The fraction bar applies to all of 4y − 7.',
+        explanation: 'Multiplying by 3 gives 4y − 7 = 48. Adding 7 gives 4y = 55.'
+      },
+      {
+        prompt: 'Solve for y.', equation: '4y = 55', type: 'number', answer: 55/4,
+        hint: 'Divide 55 by 4. Enter 55/4 or 13.75.',
+        explanation: 'y = 55/4 = 13.75. Check: (55 − 7)/3 − 1 = 16 − 1 = 15.',
+        success: 'Tower complete! y = 55/4.'
+      }
+    ],
+    solution: '(4y − 7)/3 = 16 → 4y − 7 = 48 → 4y = 55 → y = 55/4.',
+    takeaway: 'Undo outside operations first, then simplify the numerator.'
+  },
+  {
+    id: 'double-distribute', world: 'equations', title: 'Confetti Balance',
+    skill: 'Distribute negatives on both sides',
+    display: '−8(2 − x) = −4(10x + 2) + 4',
+    intro: 'Keep the signs straight while balancing two bursts of parentheses.',
+    steps: [
+      {
+        prompt: 'Distribute on both sides and combine constants.', type: 'choice',
+        choices: [
+          { text: '−16 − 8x = −40x − 4', correct: false, feedback: 'On the left, (−8)(−x) is +8x.' },
+          { text: '−16 + 8x = −40x − 4', correct: true, feedback: 'Yes: the right constants combine to −8 + 4 = −4.' },
+          { text: '−16 + 8x = −40x + 12', correct: false, feedback: 'On the right, (−4)(2) + 4 = −8 + 4 = −4.' }
+        ],
+        hint: 'A negative times a negative is positive. Distribute to both terms.',
+        explanation: '−8(2 − x) = −16 + 8x, and −4(10x + 2) + 4 = −40x − 4.'
+      },
+      {
+        prompt: 'Add 40x and 16 to both sides. Which equation results?', equation: '−16 + 8x = −40x − 4', type: 'choice',
+        choices: [
+          { text: '48x = −20', correct: false, feedback: 'Adding 16 to −4 gives +12, not −20.' },
+          { text: '32x = 12', correct: false, feedback: 'Adding 40x to 8x gives 48x.' },
+          { text: '48x = 12', correct: true, feedback: 'Correct! All x terms are on the left and the constants are on the right.' }
+        ],
+        hint: '8x + 40x = 48x, and −4 + 16 = 12.',
+        explanation: '−16 + 8x = −40x − 4 → 48x = 12.'
+      },
+      {
+        prompt: 'Solve for x.', equation: '48x = 12', type: 'number', answer: 1/4,
+        hint: 'x = 12/48. Reduce the fraction.',
+        explanation: 'x = 1/4. The original left and right sides both equal −14.',
+        success: 'Confetti balanced! x = 1/4.'
+      }
+    ],
+    solution: '−16 + 8x = −40x − 4 → 48x = 12 → x = 1/4.',
+    takeaway: 'Distribute before moving terms, and carry each term’s sign with it.'
+  },
+  {
+    id: 'rational-cross', world: 'equations', title: 'Potion Proportion',
+    skill: 'Solve a rational proportion with restrictions',
+    display: '8/(3a) = 14/(9 − a)',
+    intro: 'Check the forbidden values, then cross-multiply the potion recipe.',
+    note: 'Here 8/3a means 8/(3a). If your teacher means (8/3) × a, the answers are a = (9 ± 2√15)/2.',
+    steps: [
+      {
+        prompt: 'Which values must a avoid so neither denominator is zero?', type: 'choice',
+        choices: [
+          { text: 'a = 0 and a = 9', correct: true, feedback: 'Yes. 3a is zero at 0, and 9 − a is zero at 9.' },
+          { text: 'a = 3 and a = 9', correct: false, feedback: '3a = 0 when a = 0, not when a = 3.' },
+          { text: 'a = 0 only', correct: false, feedback: 'The denominator 9 − a is also zero when a = 9.' }
+        ],
+        hint: 'Set each denominator equal to zero to find excluded values.',
+        explanation: 'The original equation is defined only when a ≠ 0 and a ≠ 9.'
+      },
+      {
+        prompt: 'Cross-multiply. Which equation is correct?', type: 'choice',
+        choices: [
+          { text: '24a = 14(9 − a)', correct: false, feedback: 'Multiply each numerator by the opposite denominator, not its own denominator.' },
+          { text: '8(9 − a) = 14(3a)', correct: true, feedback: 'Correct: 8 pairs with 9 − a, and 14 pairs with 3a.' },
+          { text: '8(9 − a) = 14a', correct: false, feedback: 'Keep the whole denominator 3a. The right side is 14 × 3a = 42a.' }
+        ],
+        hint: 'Use opposite corners: 8 × (9 − a) and 14 × (3a).',
+        explanation: 'Multiply by 3a(9 − a), which is nonzero for allowed values: 8(9 − a) = 42a.'
+      },
+      {
+        prompt: 'Distribute and add 8a. Which equation remains?', equation: '8(9 − a) = 42a', type: 'choice',
+        choices: [
+          { text: '72 = 34a', correct: false, feedback: 'To remove −8a on the left, add 8a to both sides: 42a + 8a = 50a.' },
+          { text: '9 = 50a', correct: false, feedback: 'Distribute the 8 to the 9 too: 8 × 9 = 72.' },
+          { text: '72 = 50a', correct: true, feedback: 'Yes! 72 − 8a = 42a becomes 72 = 50a.' }
+        ],
+        hint: 'First get 72 − 8a = 42a.',
+        explanation: '72 − 8a = 42a → 72 = 50a.'
+      },
+      {
+        prompt: 'Solve for a. Remember the excluded values!', equation: '72 = 50a', type: 'number', answer: 36/25,
+        hint: 'Divide 72 by 50, then reduce. The answer must differ from 0 and 9.',
+        explanation: 'a = 36/25 = 1.44 is allowed. Both original fractions equal 50/27.',
+        success: 'Potion perfected! a = 36/25.'
+      }
+    ],
+    solution: 'a ≠ 0, 9. 8(9 − a) = 42a → 72 = 50a → a = 36/25.',
+    takeaway: 'State denominator restrictions before multiplying, and check the solution against them.'
+  },
+  {
+    id: 'sign-marathon', world: 'equations', title: 'Star Sprint',
+    skill: 'Distribute, combine, and solve a multistep equation',
+    display: '−8 − 3(4x − 1) + x = −2(x − 4) − (3x + 1)',
+    intro: 'Three negative multipliers are hiding here. Catch every sign!',
+    steps: [
+      {
+        prompt: 'Simplify the left side.', type: 'choice',
+        choices: [
+          { text: '−11x − 5', correct: true, feedback: 'Yes: −8 − 12x + 3 + x = −11x − 5.' },
+          { text: '−11x − 11', correct: false, feedback: '(−3)(−1) is +3, so the constants are −8 + 3 = −5.' },
+          { text: '−13x − 5', correct: false, feedback: 'Combine −12x + x as −11x, not −13x.' }
+        ],
+        hint: 'Distribute −3 first, then group x terms and constants.',
+        explanation: '−8 − 3(4x − 1) + x = −8 − 12x + 3 + x = −11x − 5.'
+      },
+      {
+        prompt: 'Simplify the right side.', type: 'choice',
+        choices: [
+          { text: 'x + 9', correct: false, feedback: 'The outside minus makes −(3x + 1) become −3x − 1.' },
+          { text: '−5x − 9', correct: false, feedback: '(−2)(−4) is +8; the constants are +8 − 1 = +7.' },
+          { text: '−5x + 7', correct: true, feedback: 'Correct: −2x + 8 − 3x − 1 = −5x + 7.' }
+        ],
+        hint: 'Distribute −2, and treat the second minus as multiplying by −1.',
+        explanation: '−2(x − 4) − (3x + 1) = −2x + 8 − 3x − 1 = −5x + 7.'
+      },
+      {
+        prompt: 'Add 5x and 5 to both sides.', equation: '−11x − 5 = −5x + 7', type: 'choice',
+        choices: [
+          { text: '−16x = 12', correct: false, feedback: 'Adding 5x to −11x gives −6x.' },
+          { text: '−6x = 12', correct: true, feedback: 'Yes: −11x + 5x = −6x, and 7 + 5 = 12.' },
+          { text: '−6x = 2', correct: false, feedback: 'To remove −5, add 5. On the right, 7 + 5 = 12.' }
+        ],
+        hint: 'Move the x terms together, then undo the −5.',
+        explanation: '−11x − 5 = −5x + 7 → −6x = 12.'
+      },
+      {
+        prompt: 'Solve for x.', equation: '−6x = 12', type: 'number', answer: -2,
+        hint: 'Divide 12 by −6. A positive divided by a negative is negative.',
+        explanation: 'x = −2. Substitution in the original equation gives 17 on each side.',
+        success: 'Star sprint complete! x = −2.'
+      }
+    ],
+    solution: '−11x − 5 = −5x + 7 → −6x = 12 → x = −2.',
+    takeaway: 'Simplify each side separately before moving terms across the balance.'
+  },
+  {
+    id: 'literal-s', world: 'formulas', title: 'Secret Letter',
+    skill: 'Rearrange a formula to isolate s',
+    display: 't = s/8 + 1     Solve for s.',
+    intro: 'Treat the other letters as numbers you already know.',
+    note: 'The typed 1/8s is interpreted as (1/8) × s, or s/8.',
+    steps: [
+      {
+        prompt: 'Which move undoes the +1?', type: 'choice',
+        choices: [
+          { text: 't + 1 = s/8', correct: false, feedback: 'Undo +1 by subtracting 1 from both sides.' },
+          { text: 't − 1 = s/8', correct: true, feedback: 'Exactly! Subtract 1 to leave s/8.' },
+          { text: 't = (s − 1)/8', correct: false, feedback: 'The +1 is outside the division. Subtract 1 from the entire equation.' }
+        ],
+        hint: 'Use the inverse operation of addition.',
+        explanation: 't = s/8 + 1 → t − 1 = s/8.'
+      },
+      {
+        prompt: 'How do you undo division by 8?', equation: 't − 1 = s/8', type: 'choice',
+        choices: [
+          { text: 'Multiply both sides by 8', correct: true, feedback: 'Yes. Multiply the entire quantity t − 1 by 8.' },
+          { text: 'Divide both sides by 8', correct: false, feedback: 'Dividing again would leave s/64. Multiplication undoes division.' },
+          { text: 'Add 8 to both sides', correct: false, feedback: 'Addition cannot undo multiplication or division.' }
+        ],
+        hint: 'The inverse of dividing by 8 is multiplying by 8.',
+        explanation: '8(t − 1) = s.'
+      },
+      {
+        prompt: 'Choose the correct formula for s.', type: 'choice',
+        choices: [
+          { text: 's = 8t − 1', correct: false, feedback: 'Distribute 8 to both t and −1: 8(t − 1) = 8t − 8.' },
+          { text: 's = (t − 1)/8', correct: false, feedback: 'You must multiply by 8 to undo s/8.' },
+          { text: 's = 8(t − 1)', correct: true, feedback: 'Correct! This is also s = 8t − 8.' }
+        ],
+        hint: 'Keep t − 1 together in parentheses when multiplying by 8.',
+        explanation: 's = 8(t − 1) = 8t − 8. This works for every real t.',
+        success: 'Secret unlocked! s = 8(t − 1).'
+      }
+    ],
+    solution: 't − 1 = s/8 → s = 8(t − 1) = 8t − 8.',
+    takeaway: 'Use inverse operations on both sides; parentheses keep an entire expression together.'
+  },
+  {
+    id: 'literal-height', world: 'formulas', title: 'Ice Cream Cone',
+    skill: 'Isolate a variable in the cone volume formula',
+    display: 'V = (1/3)πr²h     Solve for h.',
+    intro: 'Find the cone’s height from its volume and radius.',
+    note: 'The sample “V-1/3pir²h” is interpreted as the cone formula V = (1/3)πr²h.',
+    steps: [
+      {
+        prompt: 'Multiply both sides by 3. What remains?', type: 'choice',
+        choices: [
+          { text: 'V/3 = πr²h', correct: false, feedback: 'Multiplying V by 3 gives 3V. Dividing would not cancel the 1/3.' },
+          { text: '3V = πr²h', correct: true, feedback: 'Yes. The factor 3 cancels the 1/3 on the right.' },
+          { text: '3V = 3πr²h', correct: false, feedback: 'On the right, 3 × (1/3) = 1, so the extra 3 disappears.' }
+        ],
+        hint: '3 × (1/3) equals 1.',
+        explanation: 'V = (1/3)πr²h → 3V = πr²h.'
+      },
+      {
+        prompt: 'Which factor should you divide by to leave h alone?', equation: '3V = πr²h', type: 'choice',
+        choices: [
+          { text: 'πr²', correct: true, feedback: 'Correct! πr² is the whole factor multiplying h.' },
+          { text: 'πr', correct: false, feedback: 'The formula contains r². Dividing by πr would still leave an r multiplying h.' },
+          { text: 'h', correct: false, feedback: 'Dividing by h removes the variable you want to isolate.' }
+        ],
+        hint: 'Find everything multiplied by h.',
+        explanation: 'Dividing by πr² is valid when r ≠ 0.'
+      },
+      {
+        prompt: 'Choose the formula for h when r ≠ 0.', type: 'choice',
+        choices: [
+          { text: 'h = V/(3πr²)', correct: false, feedback: 'The 3 belongs in the numerator because you multiplied V by 3.' },
+          { text: 'h = 3V/(πr)', correct: false, feedback: 'Keep r squared in the denominator.' },
+          { text: 'h = 3V/(πr²)', correct: true, feedback: 'Exactly! The full coefficient of h has been divided out.' }
+        ],
+        hint: 'Start with 3V = πr²h and divide both sides by πr².',
+        explanation: 'h = 3V/(πr²) for r ≠ 0. If r = 0, the original formula becomes V = 0: any h works when V = 0; no h works when V ≠ 0.',
+        success: 'Cone complete! h = 3V/(πr²).'
+      }
+    ],
+    solution: '3V = πr²h → h = 3V/(πr²), provided r ≠ 0. At r = 0: any h if V = 0, otherwise no solution.',
+    takeaway: 'Divide by the entire coefficient of the variable. Never divide by zero.'
+  },
+  {
+    id: 'literal-factor', world: 'formulas', title: 'Letter Boutique',
+    skill: 'Factor a shared variable and handle a zero coefficient',
+    display: 'ax + x = c     Solve for x.',
+    intro: 'Both terms contain x. Gather them into one stylish package.',
+    steps: [
+      {
+        prompt: 'Rewrite x as 1x and factor out x.', type: 'choice',
+        choices: [
+          { text: 'a(2x) = c', correct: false, feedback: 'Only the first x has coefficient a; the second has coefficient 1.' },
+          { text: '(a + 1)x = c', correct: true, feedback: 'Yes: ax + 1x = (a + 1)x.' },
+          { text: '(a + x)x = c', correct: false, feedback: 'The second coefficient is 1, not x.' }
+        ],
+        hint: 'ax + x means ax + 1x. Add the coefficients.',
+        explanation: 'ax + x = (a + 1)x.'
+      },
+      {
+        prompt: 'When is dividing by a + 1 allowed?', type: 'choice',
+        choices: [
+          { text: 'When a ≠ −1', correct: true, feedback: 'Correct: a + 1 must not equal zero.' },
+          { text: 'When a ≠ 0', correct: false, feedback: 'If a = 0, then a + 1 = 1, so division is safe. The forbidden value is −1.' },
+          { text: 'For every value of a', correct: false, feedback: 'At a = −1, a + 1 = 0. Division by zero is undefined.' }
+        ],
+        hint: 'Solve a + 1 = 0 to find the excluded value.',
+        explanation: 'a + 1 ≠ 0 means a ≠ −1.'
+      },
+      {
+        prompt: 'Choose the formula for x when a ≠ −1.', type: 'choice',
+        choices: [
+          { text: 'x = c/a + 1', correct: false, feedback: 'Divide c by the whole coefficient a + 1. Parentheses matter.' },
+          { text: 'x = c − a − 1', correct: false, feedback: 'The coefficient a + 1 multiplies x, so use division, not subtraction.' },
+          { text: 'x = c/(a + 1)', correct: true, feedback: 'Yes! Divide both sides by a + 1.' }
+        ],
+        hint: 'From (a + 1)x = c, divide by the entire coefficient.',
+        explanation: 'x = c/(a + 1) for a ≠ −1. If a = −1, the original equation becomes 0 = c: any x works when c = 0; none works when c ≠ 0.',
+        success: 'Letters collected! x = c/(a + 1).'
+      }
+    ],
+    solution: '(a + 1)x = c → x = c/(a + 1), provided a ≠ −1. At a = −1: any x if c = 0, otherwise no solution.',
+    takeaway: 'When the target variable appears twice, factor it out before dividing.'
+  },
+  {
+    id: 'literal-both-sides', world: 'formulas', title: 'Twin Letter Trail',
+    skill: 'Collect and factor a target variable on both sides',
+    display: 'xy − w = xz − 4     Solve for x.',
+    intro: 'Bring the x terms together and follow the trail to x.',
+    steps: [
+      {
+        prompt: 'Subtract xz and add w on both sides.', type: 'choice',
+        choices: [
+          { text: 'xy − xz = −w − 4', correct: false, feedback: 'Adding w to the right gives w − 4.' },
+          { text: 'xy − xz = w − 4', correct: true, feedback: 'Yes! All x terms are on the left and all other terms are on the right.' },
+          { text: 'xy + xz = w + 4', correct: false, feedback: 'Subtract xz, and keep the original −4 on the right.' }
+        ],
+        hint: 'Use the same subtraction and addition on both sides.',
+        explanation: 'xy − w = xz − 4 → xy − xz = w − 4.'
+      },
+      {
+        prompt: 'Factor x out of the left side.', equation: 'xy − xz = w − 4', type: 'choice',
+        choices: [
+          { text: 'x(y − z) = w − 4', correct: true, feedback: 'Correct! Distributing x gives xy − xz again.' },
+          { text: 'x(y + z) = w − 4', correct: false, feedback: 'Keep the subtraction: xy − xz factors as x(y − z).' },
+          { text: 'x(yz) = w − 4', correct: false, feedback: 'Factoring a difference does not turn the remaining terms into a product.' }
+        ],
+        hint: 'Each left-side term has one common factor x.',
+        explanation: 'xy − xz = x(y − z).'
+      },
+      {
+        prompt: 'Choose the formula for x when y ≠ z.', type: 'choice',
+        choices: [
+          { text: 'x = (w + 4)/(y − z)', correct: false, feedback: 'The numerator is w − 4. Dividing does not change that sign.' },
+          { text: 'x = (w − 4)/(y + z)', correct: false, feedback: 'The coefficient of x is y − z, not y + z.' },
+          { text: 'x = (w − 4)/(y − z)', correct: true, feedback: 'Exactly! Divide both sides by y − z.' }
+        ],
+        hint: 'Divide by the whole factor multiplying x, and keep both differences together.',
+        explanation: 'x = (w − 4)/(y − z) for y ≠ z. If y = z, the original equation requires w = 4: any x works when w = 4; no x works otherwise.',
+        success: 'Trail complete! x = (w − 4)/(y − z).'
+      }
+    ],
+    solution: 'xy − xz = w − 4 → x(y − z) = w − 4 → x = (w − 4)/(y − z), for y ≠ z. At y = z: any x if w = 4, otherwise no solution.',
+    takeaway: 'Collect the target variable, factor it, then divide by a nonzero coefficient.'
+  },
+  {
+    id: 'walkathon', world: 'stories', title: 'Kindness Walk',
+    skill: 'Model equal earnings using rate and starting amount',
+    display: 'Sara earns $0.50 per lap plus $33 in donations. Marwa earns $1.25 per lap. They walk the same number of laps and raise equal amounts. How much does each earn?',
+    intro: 'Build two earnings expressions and find where they meet.',
+    note: 'We assume both students complete the same number of laps. Equal earnings alone would not determine one unique answer if their lap counts could differ.',
+    steps: [
+      {
+        prompt: 'Let L be the number of laps each student walks. Which expression gives Sara’s earnings?', type: 'choice',
+        choices: [
+          { text: '0.50(L + 33)', correct: false, feedback: 'The $33 is a separate donation, not 33 extra laps. Add it after calculating lap earnings.' },
+          { text: '0.50L + 33', correct: true, feedback: 'Yes: lap earnings plus the fixed $33 donation.' },
+          { text: '33L + 0.50', correct: false, feedback: '$0.50 is the per-lap rate, so it multiplies L. The $33 is added once.' }
+        ],
+        hint: 'Earnings = rate × laps + extra donations.',
+        explanation: 'Sara earns 0.50L + 33 dollars. Marwa earns 1.25L dollars.'
+      },
+      {
+        prompt: 'They raise equal amounts. Choose the equation.', type: 'choice',
+        choices: [
+          { text: '0.50L + 33 = 1.25L', correct: true, feedback: 'Correct! The two earnings expressions must be equal.' },
+          { text: '0.50L = 1.25L + 33', correct: false, feedback: 'The $33 belongs to Sara, not Marwa.' },
+          { text: '0.50L + 1.25L = 33', correct: false, feedback: 'Equal earnings means set the two totals equal; do not add the two rates.' }
+        ],
+        hint: 'Put Sara’s total on one side and Marwa’s total on the other.',
+        explanation: '0.50L + 33 = 1.25L. Subtract 0.50L to get 33 = 0.75L.'
+      },
+      {
+        prompt: 'How many laps does each student walk?', equation: '33 = 0.75L', type: 'number', answer: 44, unit: 'laps',
+        hint: 'Divide 33 by 0.75. The rate difference is $0.75 per lap.',
+        explanation: 'L = 33/0.75 = 44 laps. Marwa earns $0.75 more per lap, so 44 laps make up Sara’s $33 head start.'
+      },
+      {
+        prompt: 'How much money does each student earn?', equation: 'Sara: 0.50 × 44 + 33    Marwa: 1.25 × 44', type: 'number', answer: 55, unit: 'dollars each',
+        hint: 'Use 44 laps in either earnings expression. Both should give the same total.',
+        explanation: 'Sara: $22 + $33 = $55. Marwa: $1.25 × 44 = $55. The question asks for dollars, so the final answer is $55 each.',
+        success: 'Kindness goal reached! They each earn $55.'
+      }
+    ],
+    solution: '0.50L + 33 = 1.25L → 33 = 0.75L → L = 44 laps → each student earns $55.',
+    takeaway: 'A fixed donation is added once. Answer the quantity the story asks for, with its unit.'
+  },
+  {
+    id: 'perimeter', world: 'stories', title: 'Garden Party',
+    skill: 'Model equal perimeters and interpret side lengths',
+    display: 'A square and a triangle have the same perimeter. Each square side is 3x + 2 inches. The triangle sides are x + 9, 4x, and 3x + 7 inches. Find x and the shared perimeter.',
+    intro: 'Choose matching borders for a square garden and a triangular garden.',
+    steps: [
+      {
+        prompt: 'What is the square’s perimeter?', type: 'choice',
+        choices: [
+          { text: '(3x + 2)²', correct: false, feedback: 'Squaring a side gives area. Perimeter is the distance around all four sides.' },
+          { text: '3x + 8', correct: false, feedback: 'Multiply the whole side length by 4: both 3x and 2.' },
+          { text: '4(3x + 2) = 12x + 8', correct: true, feedback: 'Exactly! A square has four equal sides.' }
+        ],
+        hint: 'Perimeter is the sum of side lengths. A square has four copies of the same side.',
+        explanation: 'Square perimeter = 4(3x + 2) = 12x + 8 inches.'
+      },
+      {
+        prompt: 'What is the triangle’s perimeter?', type: 'choice',
+        choices: [
+          { text: '8x + 16', correct: true, feedback: 'Yes: x + 4x + 3x = 8x, and 9 + 7 = 16.' },
+          { text: '8x + 7', correct: false, feedback: 'Include both constants: 9 + 7 = 16.' },
+          { text: '3(8x + 16)', correct: false, feedback: 'You already added all three sides. Do not multiply the total by 3 again.' }
+        ],
+        hint: 'Add x + 9, 4x, and 3x + 7. Group like terms.',
+        explanation: 'Triangle perimeter = (x + 9) + 4x + (3x + 7) = 8x + 16 inches.'
+      },
+      {
+        prompt: 'The perimeters are equal. Which equation models that?', type: 'choice',
+        choices: [
+          { text: '3x + 2 = 8x + 16', correct: false, feedback: 'That equates one square side with the entire triangle. Use the square’s full perimeter.' },
+          { text: '12x + 8 = 8x + 16', correct: true, feedback: 'Correct! Both expressions represent the full distance around each shape.' },
+          { text: '12x + 8 + 8x + 16 = 0', correct: false, feedback: 'Equal perimeters means set the two expressions equal to each other.' }
+        ],
+        hint: 'Square perimeter = triangle perimeter.',
+        explanation: '12x + 8 = 8x + 16. Subtract 8x and 8 to get 4x = 8.'
+      },
+      {
+        prompt: 'Solve for x.', equation: '4x = 8', type: 'number', answer: 2,
+        hint: 'Divide both sides by 4.',
+        explanation: 'x = 2. The square’s side is 3(2) + 2 = 8 inches. The triangle sides are 11, 8, and 13 inches.'
+      },
+      {
+        prompt: 'What is the shared perimeter?', equation: 'Square: 4 × 8    Triangle: 11 + 8 + 13', type: 'number', answer: 32, unit: 'inches',
+        hint: 'Use x = 2 to find the side lengths, then add all sides.',
+        explanation: 'Both perimeters equal 32 inches. The triangle is valid because 11 + 8 > 13, 11 + 13 > 8, and 8 + 13 > 11.',
+        success: 'Gardens matched! x = 2 and the perimeter is 32 inches.'
+      }
+    ],
+    solution: '4(3x + 2) = (x + 9) + 4x + (3x + 7) → 12x + 8 = 8x + 16 → x = 2. Square side: 8 in. Triangle sides: 11, 8, 13 in. Shared perimeter: 32 in.',
+    takeaway: 'Perimeter adds every side length. Substitute your answer to check both shapes.'
+  }
+];
+
+</script>
+<script>
+(() => {
+'use strict';
+const quests = window.ALGEBRA_QUESTS;
+const STORE_KEY = 'alice-algebra-arcade-v1';
+const worlds = [{id:'equations',name:'Equation garden',label:'WORLD 01 · EQUATION GARDEN',icon:'✿'},{id:'formulas',name:'Formula studio',label:'WORLD 02 · FORMULA STUDIO',icon:'ƒ'},{id:'stories',name:'Story city',label:'WORLD 03 · STORY CITY',icon:'◇'}];
+const $ = selector => document.querySelector(selector);
+const esc = text => String(text ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const emptyStep = () => ({solved:false,choice:null,value:'',hint:false,worked:false,attempts:0,feedback:null});
+const newProgress = quest => ({step:0,finished:false,results:quest.steps.map(emptyStep)});
+const freshState = () => ({current:quests[0].id,earned:[],progress:{}});
+let state = freshState(), storageOkay = true, toastTimer;
+try {
+ const saved = JSON.parse(localStorage.getItem(STORE_KEY));
+ if (saved && quests.some(q=>q.id===saved.current)) {
+  state.current = saved.current;
+  state.earned = Array.isArray(saved.earned) ? [...new Set(saved.earned.filter(id=>quests.some(q=>q.id===id)))] : [];
+  for (const quest of quests) {
+   const old = saved.progress?.[quest.id];
+   if (!old || !Array.isArray(old.results) || old.results.length!==quest.steps.length) continue;
+   state.progress[quest.id] = {step:Math.min(Math.max(Math.floor(Number(old.step)||0),0),quest.steps.length-1),finished:!!old.finished,results:old.results.map(r=>({...emptyStep(),...((r && typeof r==='object')?r:{}),value:String(r?.value??''),choice:Number.isInteger(r?.choice)?r.choice:null}))};
+  }
+ }
+} catch { storageOkay = false; }
+function save() { try { localStorage.setItem(STORE_KEY,JSON.stringify(state)); } catch { storageOkay=false; } }
+function questNow() { return quests.find(q=>q.id===state.current)||quests[0]; }
+function progressNow() { const q=questNow(); return state.progress[q.id] ||= newProgress(q); }
+function resultNow() { const p=progressNow(); return p.results[p.step]; }
+function toast(text) { $('#toast').textContent=text; $('#toast').classList.add('visible'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),2300); }
+function parseNumber(raw) {
+ let s=String(raw).trim().replace(/[−–]/g,'-').replace(/^[a-zA-Z]\s*=\s*/,'').replace(/^\$\s*/,'');
+ if (/^[-+]?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s)) s=s.replace(/,/g,'');
+ const mixed=s.match(/^([-+]?)(\d+)\s+(\d+)\s*\/\s*(\d+)$/);
+ if (mixed) { const den=Number(mixed[4]); if(!den)return null;return (mixed[1]==='-'?-1:1)*(Number(mixed[2])+Number(mixed[3])/den); }
+ const fraction=s.match(/^([-+]?(?:\d+(?:\.\d*)?|\.\d+))\s*\/\s*([-+]?(?:\d+(?:\.\d*)?|\.\d+))$/);
+ if(fraction){const den=Number(fraction[2]);if(!den)return null;const n=Number(fraction[1])/den;return Number.isFinite(n)?n:null;}
+ if(!/^[-+]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s))return null;
+ const n=Number(s);return Number.isFinite(n)?n:null;
+}
+function numericCorrect(value,answer) { return (Array.isArray(answer)?answer:[answer]).some(n=>Math.abs(value-n)<=0.000051); }
+function prettyAnswer(answer) { return Array.isArray(answer)?answer.join(' or '):String(answer); }
+function renderMap() {
+ $('#gem-count').textContent=state.earned.length; $('#map-count').textContent=`${state.earned.length} / ${quests.length}`;
+ $('#overall-progress').style.width=`${state.earned.length/quests.length*100}%`;
+ $('#mission-map').innerHTML=worlds.map(w=>{
+  const group=quests.filter(q=>q.world===w.id),complete=group.filter(q=>state.earned.includes(q.id)).length;
+  return `<div class="world-group"><div class="world-heading"><span class="world-icon" aria-hidden="true">${w.icon}</span>${w.name}<span class="count">${complete} / ${group.length}</span></div>${group.map(q=>{const n=quests.indexOf(q)+1,earned=state.earned.includes(q.id);return `<button class="mission ${q.id===state.current?'active':''}" data-quest="${esc(q.id)}" ${q.id===state.current?'aria-current="true"':''} aria-label="Mission ${n}: ${esc(q.title)}${earned?', gem earned':''}"><span class="mini-number" aria-hidden="true">${String(n).padStart(2,'0')}</span><span>${esc(q.title)}</span>${earned?'<span class="done-icon" aria-hidden="true">✦</span>':''}</button>`;}).join('')}</div>`;
+ }).join('');
+}
+function diagram(q) {
+ if(q.world!=='stories'||!/(triangle|perimeter|square)/i.test(q.display))return '';
+ return `<div class="geometric-diagram" aria-label="Diagram: square has four sides of 3x plus 2; triangle sides are x plus 9, 4x, and 3x plus 7"><svg viewBox="0 0 230 125" role="img" aria-label="Square side 3x plus 2"><rect x="65" y="12" width="85" height="85" rx="2" fill="#fde5f0" stroke="#d62375" stroke-width="2"/><text x="108" y="118" text-anchor="middle">3x + 2</text><text x="165" y="60">3x + 2</text></svg><svg viewBox="0 0 230 125" role="img" aria-label="Triangle sides x plus 9, 4x, and 3x plus 7"><path d="M32 97 L182 97 L117 12 Z" fill="#fbe3f0" stroke="#d62375" stroke-width="2"/><text x="51" y="43" text-anchor="middle">x + 9</text><text x="182" y="46" text-anchor="middle">4x</text><text x="108" y="118" text-anchor="middle">3x + 7</text></svg></div>`;
+}
+function renderProblem() {
+ const q=questNow(),i=quests.indexOf(q),w=worlds.find(w=>w.id===q.world);
+ $('#quest-title').textContent=q.title; $('#skill-tag').textContent=q.skill; $('#world-label').textContent=w.label;
+ $('#quest-number').innerHTML=`${String(i+1).padStart(2,'0')}<span>/ ${quests.length}</span>`;
+ $('#problem-area').innerHTML=`<div class="problem"><p class="intro">${esc(q.intro)}</p><div class="equation-display ${q.world==='stories'?'story-display':''}">${esc(q.display)}</div>${diagram(q)}${q.note?`<div class="notation-note">${esc(q.note)}</div>`:''}</div>`;
+}
+function feedbackHtml(r) {
+ if(!r.feedback)return '';
+ return `<div class="feedback ${r.feedback.kind==='success'?'success':''}" role="status"><strong>${esc(r.feedback.title)}</strong>${esc(r.feedback.text)}</div>`;
+}
+function renderStep() {
+ const q=questNow(),p=progressNow();
+ if(p.finished){renderSummary();return;}
+ const step=q.steps[p.step],r=p.results[p.step];
+ const dots=q.steps.map((s,i)=>`<button class="step-dot ${i===p.step?'current':''} ${p.results[i].solved?'solved':''}" data-step="${i}" aria-label="${i===p.step?'Current step':'Go to step'} ${i+1}${p.results[i].solved?', completed':''}" ${i===p.step?'aria-current="step"':''}>${p.results[i].solved&&i!==p.step?'✓':i+1}</button>`).join('');
+ let answerHtml;
+ if(step.type==='choice')answerHtml=`<div class="choices" role="group" aria-label="Answer choices">${step.choices.map((c,i)=>`<button class="choice ${r.choice===i?'selected':''} ${r.solved&&c.correct?'correct-choice':''} ${!r.solved&&r.feedback?.kind==='wrong'&&r.choice===i?'wrong-choice':''}" data-choice="${i}" aria-pressed="${r.choice===i}" ${r.solved?'disabled':''}><span class="choice-letter" aria-hidden="true">${String.fromCharCode(65+i)}</span><span>${esc(c.text)}</span></button>`).join('')}</div>`;
+ else answerHtml=`<div class="input-wrap"><input id="answer-input" class="answer-input" aria-label="Your answer" type="text" inputmode="text" placeholder="Type your answer" autocomplete="off" spellcheck="false" value="${esc(r.value)}" ${r.solved?'disabled':''}><span class="answer-unit">${esc(step.unit||'')}</span></div><span class="input-help">Fractions or decimals work. For repeating decimals, use at least 4 decimal places.</span>`;
+ const final=p.step===q.steps.length-1;
+ $('#step-area').innerHTML=`<section class="step-section"><div class="step-row"><span class="step-caption"><strong>STEP ${p.step+1}</strong> OF ${q.steps.length} · ${r.solved?'Nicely done':r.worked?'Try it with help':'Your move'}</span><div class="step-dots" aria-label="Exercise steps">${dots}</div></div><h3 class="step-prompt" tabindex="-1">${esc(step.prompt)}</h3>${step.equation?`<div class="step-equation">${esc(step.equation)}</div>`:''}<form id="answer-form">${answerHtml}<div class="action-row"><div class="help-actions"><button class="text-button" type="button" id="hint-button">♡ ${r.hint?'Hide hint':'Get a hint'}</button><button class="text-button quiet" type="button" id="redo-button">Redo this step</button></div><button class="primary" type="submit" id="check-button" ${!r.solved&&step.type==='choice'&&r.choice===null?'disabled':''}>${r.solved?(final?'Finish mission':'Next step'):'Check answer'}</button></div></form>${r.hint?`<div class="hint-box"><strong>A little nudge</strong>${esc(step.hint)}<button class="text-button" id="worked-button" type="button" style="display:block;margin-top:7px">See the worked step</button></div>`:''}${r.worked?`<div class="hint-box"><strong>Worked step</strong>${esc(step.explanation)}<br><b>${esc(step.type==='choice'?step.choices.find(c=>c.correct)?.text:step.answerText??prettyAnswer(step.answer))}</b><br>Now give it a try above.</div>`:''}${feedbackHtml(r)}</section>`;
+ $('#answer-input')?.addEventListener('input',e=>{r.value=e.target.value;if(r.feedback?.kind!=='success')r.feedback=null;save();});
+ $('#answer-form').addEventListener('submit',e=>{e.preventDefault();if(r.solved)advance();else checkAnswer();});
+ $('#hint-button').onclick=()=>{r.hint=!r.hint;save();renderStep();};
+ $('#redo-button').onclick=()=>{p.results[p.step]=emptyStep();p.finished=false;save();renderStep();toast('Fresh step. You’ve got this.');};
+ $('#worked-button')?.addEventListener('click',()=>{r.worked=true;save();renderStep();});
+}
+function checkAnswer() {
+ const q=questNow(),p=progressNow(),step=q.steps[p.step],r=p.results[p.step];
+ let correct=false,wrongText='Check the signs and apply the same operation to both sides. Your hint can help.';
+ if(step.type==='choice') {
+  if(r.choice===null)return;
+  correct=!!step.choices[r.choice]?.correct;
+  wrongText=step.choices[r.choice]?.feedback||wrongText;
+ } else {
+  const parsed=parseNumber(r.value);
+  if(parsed===null){r.feedback={kind:'wrong',title:'Let’s make that answer readable',text:'Enter a number, a fraction like −2/9, or a mixed number like 13 3/4. A denominator cannot be zero.'};renderStep();return;}
+  correct=numericCorrect(parsed,step.answer);
+  wrongText=step.feedback||step.wrongFeedback||'Not quite yet. Follow the hint, check your arithmetic, and try again.';
+ }
+ r.attempts++;
+ if(correct){r.solved=true;r.feedback={kind:'success',title:step.success||['That’s it, Alice!','A lovely bit of algebra!','You’ve got the idea!'][p.step%3],text:step.explanation};}
+ else r.feedback={kind:'wrong',title:'Keep going — you can retry',text:wrongText};
+ save();renderStep();
+}
+function advance() {
+ const q=questNow(),p=progressNow();
+ if(p.step<q.steps.length-1){p.step++;save();renderStep();$('.step-prompt')?.focus({preventScroll:true});return;}
+ const unfinished=p.results.findIndex(r=>!r.solved);
+ if(unfinished!==-1){p.step=unfinished;save();renderStep();toast('One more idea to practice before collecting your gem.');return;}
+ p.finished=true;const isNew=!state.earned.includes(q.id);if(isNew)state.earned.push(q.id);
+ save();renderMap();renderStep();if(isNew)celebrate();
+}
+function renderSummary() {
+ const q=questNow(),p=progressNow(),all=state.earned.length===quests.length;
+ $('#step-area').innerHTML=`<section class="step-section"><div class="summary"><span class="big-gem" aria-hidden="true">✦</span><h3>${all?'All 14 gems. Amazing work!':'Mission complete!'}</h3><p>${all?'You’ve explored every mission. Replay any one to make the skills stick.':`One more skill in your collection. ${state.earned.length} of ${quests.length} gems earned.`}</p><div class="solution-box"><span class="eyebrow">THE FINISHED PUZZLE</span><div class="solution-text">${esc(q.solution)}</div><p class="takeaway">${esc(q.takeaway)}</p></div>${q.extra?`<details class="concept-check"><summary>Honors check: special cases</summary><p>${esc(q.extra)}</p></details>`:''}<div class="summary-actions"><button class="primary" id="next-quest">${all?'Pick a surprise mission':'Next mission'}</button><button class="secondary" id="replay-button">Play this mission again</button></div><p class="storage-note">${storageOkay?'Progress saves in this browser. You can stop and come back.':'Browser storage is unavailable. Keep this tab open to keep your progress.'}</p></div></section>`;
+ $('#next-quest').onclick=()=>{const start=quests.indexOf(q);let next;for(let n=1;n<=quests.length;n++){const candidate=quests[(start+n)%quests.length];if(!state.earned.includes(candidate.id)){next=candidate;break;}}openQuest((next||quests[(start+1)%quests.length]).id,true);};
+ $('#replay-button').onclick=restart;
+}
+function openQuest(id) { if(!quests.some(q=>q.id===id))return;state.current=id;save();render();$('.play-area').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}); }
+function restart() { const q=questNow();state.progress[q.id]=newProgress(q);save();renderStep();toast('Exercise restarted. Your collected gems are safe.'); }
+function render() { renderMap();renderProblem();renderStep(); }
+function celebrate() {
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const container=$('#confetti');container.replaceChildren();
+ for(let n=0;n<36;n++){const bit=document.createElement('i');bit.className='confetti-bit';bit.style.left=`${Math.random()*100}%`;bit.style.background=['#ee378d','#f4aa53','#ab68c5','#67bfa8'][n%4];bit.style.animationDelay=`${Math.random()*.4}s`;bit.style.transform=`rotate(${Math.random()*200}deg)`;container.append(bit);}
+ setTimeout(()=>container.replaceChildren(),2600);
+}
+$('#mission-map').addEventListener('click',e=>{const button=e.target.closest('[data-quest]');if(button)openQuest(button.dataset.quest);});
+$('#step-area').addEventListener('click',e=>{
+ const choice=e.target.closest('[data-choice]');
+ if(choice){const r=resultNow();if(r.solved)return;r.choice=Number(choice.dataset.choice);r.feedback=null;save();renderStep();$('#step-area').querySelector(`[data-choice="${r.choice}"]`)?.focus({preventScroll:true});}
+ const dot=e.target.closest('[data-step]');
+ if(dot){progressNow().step=Number(dot.dataset.step);progressNow().finished=false;save();renderStep();$('.step-prompt')?.focus({preventScroll:true});}
+});
+$('#restart-button').onclick=restart;
+$('#brand-home').onclick=e=>{e.preventDefault();$('.play-area').scrollIntoView({behavior:'smooth',block:'start'});};
+$('#surprise-button').onclick=()=>{const candidates=quests.filter(q=>q.id!==state.current);openQuest(candidates[Math.floor(Math.random()*candidates.length)].id,true);};
+$('#reset-button').onclick=()=>{const dialog=$('#reset-dialog');dialog.returnValue='';dialog.showModal();};
+$('#reset-dialog').addEventListener('close',()=>{if($('#reset-dialog').returnValue==='reset'){state=freshState();save();render();window.scrollTo({top:0,behavior:'instant'});toast('A brand-new adventure begins.');}});
+$('#collection-button').onclick=()=>{$('#collection-content').innerHTML=`<p>${state.earned.length} of ${quests.length} gems collected. Finish every step of a mission to earn its gem.</p><div class="completion-overview">${quests.map(q=>`<span class="collection-gem ${state.earned.includes(q.id)?'earned':''}" title="${esc(q.title)}" aria-label="${esc(q.title)}: ${state.earned.includes(q.id)?'gem earned':'still to explore'}">✦</span>`).join('')}</div><p>Hints and retries are always welcome.</p>`;$('#collection-dialog').showModal();};
+render();
+})();
+
+</script>
+</body></html>

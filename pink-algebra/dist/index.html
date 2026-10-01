@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e62e83"><meta name="description" content="Alice's pink algebra arcade: Set 2 with fresh equation puzzles, formula challenges, and word-problem missions.">
+<title>Alice’s Algebra Arcade · Set 2</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23e62e83'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia' font-size='48' fill='white'%3Ex%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+<link rel="preload" as="image" href="ending-atlas.png">
+<script src="questions.js" defer></script><script src="endings.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+<div class="sparkle-field" aria-hidden="true">＋ &nbsp; × &nbsp; ÷ &nbsp; ＝</div>
+<header class="masthead">
+<a class="brand" href="#" id="brand-home" aria-label="Alice's Algebra Arcade, return to mission"><span class="brand-icon" aria-hidden="true">x<span>★</span></span><span>Alice’s<span class="brand-sub">ALGEBRA ARCADE</span></span></a>
+<div class="header-right"><span class="header-note">Set 2 · A fresh algebra adventure.</span><button class="collection-pill" id="collection-button" aria-label="View gem collection"><span aria-hidden="true">✦</span> <strong id="gem-count">0</strong><span>/ 14 gems</span></button></div>
+</header>
+<main class="layout">
+<aside class="map-panel" aria-label="Mission map">
+<div class="map-top"><span class="eyebrow">YOUR ADVENTURE</span><h1>Pick a mission<span class="title-star" aria-hidden="true">✳</span></h1><p>Go in any order. Every try counts.</p></div>
+<div class="map-progress"><div class="progress-label"><span>Gem collection</span><strong id="map-count">0 / 14</strong></div><div class="progress-track"><div id="overall-progress"></div></div></div>
+<nav id="mission-map" aria-label="Choose an algebra exercise"></nav>
+<div class="map-footer"><button class="text-button" id="surprise-button"><span aria-hidden="true">⤨</span> Surprise me</button><button class="text-button quiet" id="reset-button">Start a new adventure</button></div>
+</aside>
+<section class="play-area" aria-label="Practice exercise">
+<div class="welcome-row"><div><span class="eyebrow" id="world-label">WORLD 01 · EQUATION GARDEN</span><h2 id="quest-title">Signs & sparkles</h2></div><span class="quest-number" id="quest-number">01<span>/ 14</span></span></div>
+<article class="quest-card" id="quest-card"><div class="card-top"><span class="skill-tag" id="skill-tag">Distributive property</span><button id="restart-button" class="restart-button"><span aria-hidden="true">↻</span> Restart exercise</button></div><div id="problem-area"></div><div id="step-area"></div></article>
+<div class="practice-footer"><span><span aria-hidden="true">♡</span> No timer. No lost points. Just learning.</span><span>Made for Alice</span></div>
+</section>
+</main>
+<dialog id="reset-dialog"><form method="dialog"><span class="dialog-symbol" aria-hidden="true">✦</span><h2>A fresh adventure?</h2><p>This resets your gems and exercise progress for Set 2 in this browser. You can replay one exercise with its Restart button.</p><div class="dialog-actions"><button class="secondary" value="cancel">Keep my progress</button><button class="primary" value="reset">Start fresh</button></div></form></dialog>
+<dialog id="collection-dialog"><form method="dialog"><span class="dialog-symbol" aria-hidden="true">✦</span><h2>Your gem collection</h2><div id="collection-content"></div><button class="primary" value="close">Back to the arcade</button></form></dialog>
+<div id="toast" role="status" aria-live="polite"></div><div id="confetti" aria-hidden="true"></div>
+<noscript>Please enable JavaScript to play Alice’s Algebra Arcade.</noscript>
+</body></html>

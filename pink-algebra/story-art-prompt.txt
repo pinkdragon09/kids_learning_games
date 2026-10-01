@@ -1,0 +1,11 @@
+Use case: illustration-story.
+Asset type: ONE square PNG sprite atlas for CSS background-position cropping in a pink algebra adventure game for middle-school Alice.
+Primary request: Generate a single 4-by-4 grid sprite sheet of 16 matching polished storybook sticker illustrations, ideally 2048 by 2048 pixels (1024 by 1024 also acceptable). This is one atlas, not variants. Use a truly transparent background with actual alpha, not white or a checkerboard drawn into the image.
+Composition: exact evenly sized square cells in 4 rows and 4 columns. Every subject centered within its own cell and occupying at most 65 percent of that cell's width and height. Generous transparent gutters, at least 17.5 percent padding on every side of every cell. No visible grid, no cell borders, no drawn background, no outlines of the cells, no shared shadows, no crossing or overlaps between cells. Consistent visual scale and lighting, crisp readable shapes.
+Style: polished whimsical storybook sticker illustration with soft dimensional shading, saturated pink, fuchsia, berry, pastel highlights, mint accents, and occasional golden accents. Charming and sophisticated enough for a middle-school girl. Isolated compact object arrangements.
+Exact subject order, left to right:
+Row 1: pink ribbon bow with long flowing tails; clear cup of berry smoothie with blueberries and a strawberry garnish; closed pink heart locket with golden key beside it; small trail of gold and pink twinkling stars.
+Row 2: stack of three pink macarons; pink confetti popper; round glass potion flask with rose-pink liquid; crescent moon and a small star.
+Row 3: open pink postcard envelope with a small heart; transparent cylindrical jar containing golden sparkles; pink-and-gold charm bracelet; two pink-and-purple butterflies.
+Row 4: stack of books with a pink ribbon bookmark; small rose bush in a planter; pink faceted gem; gold star with a pink ribbon.
+Constraints: exactly these sixteen illustrations, exactly four aligned rows and four aligned columns, each one entirely inside its assigned equal square cell with generous padding, fully transparent everywhere outside the individual illustrations including between every cell. Absolutely no text, letters, numbers, logos, watermark, background scenery or decorative frame. Preserve transparent interiors of glass where suitable.
