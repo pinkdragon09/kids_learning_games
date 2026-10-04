@@ -32,7 +32,10 @@ clues (questions) each, covering nouns through quotation marks and a final mixed
 review. Every answer comes with a short explanation of the rule, and stars and
 detective ranks are saved in the browser.
 
-**Play:** open `index.html` in Chrome. No install or server needed.
+**Play online:** [Grammar Detective](https://pinkdragon09.github.io/kids_learning_games/).
+
+**Play a downloaded copy:** open [`index.html`](index.html) in Chrome. No install
+or server needed.
 
 **Edit questions:** each question is one line in the `UNITS` list near the top
 of the script in `index.html`. Fields: `q` question, `s` sentence shown as
