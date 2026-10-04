@@ -10,6 +10,8 @@ The illustration atlas was created with built-in imagegen and saved as `dist/end
 
 ## Play
 
+Play online in Chrome: [Set 2 with story endings](https://pinkdragon09.github.io/kids_learning_games/Alice-Algebra-Arcade.html) or the [original question set](https://pinkdragon09.github.io/kids_learning_games/Alice-Algebra-Arcade-Set-1.html).
+
 Open `../Alice-Algebra-Arcade.html` with Google Chrome for the updated self-contained game. The original question set is saved in `../Alice-Algebra-Arcade-Set-1.html` and `sets/set-1.js`.
 
 To serve the current game locally, run from the workspace:
@@ -27,7 +29,7 @@ Then open `http://127.0.0.1:8834` in Chrome.
 - Numbered step buttons let Alice practice or revisit any step; all steps must be completed to earn a gem.
 - Start a new adventure resets the current set after a confirmation inside the game.
 - Each set has its own progress record. Set 2 starts fresh and does not overwrite the original set’s browser storage.
-- File and server versions use separate browser storage. Fonts fall back to system fonts without internet.
+- The public website, downloaded file, and local server use separate browser storage. Progress stays in the same browser and device. Fonts fall back to system fonts without internet.
 
 ## Verification
 

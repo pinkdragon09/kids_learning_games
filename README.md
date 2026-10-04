@@ -8,10 +8,16 @@ illustrated story endings and themed animations after every completed mission.
 Alice can replay an animation, restart an exercise at any step, and resume
 saved progress in the same browser.
 
-**Play:** download the repository and open
+**Play online:** [Set 2 with story endings](https://pinkdragon09.github.io/kids_learning_games/Alice-Algebra-Arcade.html)
+or the [original question set](https://pinkdragon09.github.io/kids_learning_games/Alice-Algebra-Arcade-Set-1.html).
+
+**Play a downloaded copy:** download the repository and open
 [`Alice-Algebra-Arcade.html`](Alice-Algebra-Arcade.html) in Chrome. No install or
 server needed. The original question set is in
 [`Alice-Algebra-Arcade-Set-1.html`](Alice-Algebra-Arcade-Set-1.html).
+
+Progress is saved in the same browser and device. The public website and
+downloaded or local-server copies keep separate progress.
 
 **Edit the game:** see [`pink-algebra/README.md`](pink-algebra/README.md) for the
 source files, local server instructions, and verification details. The current
